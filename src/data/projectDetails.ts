@@ -122,9 +122,9 @@ export const PROJECT_DETAILS: Record<string, any> = {
     }
   },
   'aurora-automation': {
-    subtitle: '92,000줄 Python 코드베이스 · 8개 ML 모델 앙상블 · 5중 안전 게이트로 24/7 자율 운영되는 암호화폐 트레이딩 시스템',
+    subtitle: '92,000줄 Python 코드베이스 · 8개 ML 모델 앙상블 · 5중 안전 게이트로 24/7 자율 운영되는 퀀트 트레이딩 시스템',
     overview: {
-      background: 'Bybit 거래소에서 BTCUSDT를 대상으로 24시간 자율 운영되는 알고리즘 트레이딩 시스템입니다. 단순 백테스트 수준이 아니라, ML 모델 학습 → 백테스트 검증 → 실시간 시그널 생성 → 주문 실행 → 리스크 관리까지 전체 파이프라인을 직접 설계하고 운영하고 있습니다. 503회 이상의 커밋과 140개 파일, 92,000줄의 코드로 구성된 프로덕션 시스템입니다.',
+      background: '글로벌 파생상품 시장을 대상으로 24시간 자율 운영되는 알고리즘 트레이딩 시스템입니다. 단순 백테스트 수준이 아니라, ML 모델 학습 → 백테스트 검증 → 실시간 시그널 생성 → 주문 실행 → 리스크 관리까지 전체 파이프라인을 직접 설계하고 운영하고 있습니다. 503회 이상의 커밋과 140개 파일, 92,000줄의 코드로 구성된 프로덕션 시스템입니다.',
       goal: '단일 모델의 과적합 리스크를 줄이기 위해 XGBoost, LightGBM, CatBoost 기반 8개 모델을 앙상블하고, 172개 기술 지표 피처를 활용한 다중 전략 시그널을 Combo Pack 단위로 관리합니다. shadow → canary → active 3단계 승격 체계와 5중 안전 게이트(Backup/Integrity/Runtime/Promotion/Tracking)를 통해 운영 안정성을 극대화했습니다.',
       image: 'https://firebul.github.io/portfolio/assets/images/projects/aurora-file-tree.svg'
     },
@@ -139,7 +139,7 @@ export const PROJECT_DETAILS: Record<string, any> = {
       { step: 1, title: '피처 엔지니어링 & 모델 학습', desc: '172개 기술 지표(RSI, MACD, Bollinger, ATR 등) 기반 피처를 설계하고, XGBoost/LightGBM/CatBoost 3종 엔진으로 8개 모델을 학습. MoE(Mixture of Experts) 앙상블로 시그널 품질 극대화' },
       { step: 2, title: 'Pinset 대규모 병렬 백테스트', desc: '14개 Worker 프로세스로 수만 개의 전략 조합을 병렬 백테스트. Phase 2(개별 검증) → Phase 3(생존율 집계) → Combo Pack 빌드의 3단계 파이프라인으로 33,752건 거래, Sharpe 5.05, 승률 65.2% 달성' },
       { step: 3, title: '안전 승격 체계 & 리스크 관리', desc: 'Draft → Shadow(모의 거래) → Canary(소액 실거래) → Active(정규 운영) 4단계 승격. 5중 게이트(Backup/Integrity/Runtime/Promotion/Tracking Key) 모두 통과해야 다음 단계로 진입' },
-      { step: 4, title: '실시간 운영 & 모니터링', desc: '5개 Canary Trader 인스턴스가 Bybit에서 동시 운영. Catalyst 24/7 데몬이 헬스체크, PID 모니터링, DB 성장률 감시를 수행하고 Telegram으로 실시간 알림 전송' },
+      { step: 4, title: '실시간 운영 & 모니터링', desc: '5개 Canary Trader 인스턴스가 거래소에서 동시 운영. Catalyst 24/7 데몬이 헬스체크, PID 모니터링, DB 성장률 감시를 수행하고 Telegram으로 실시간 알림 전송' },
       { step: 5, title: '대시보드 & 의사결정 지원', desc: '9,190줄 규모의 풀스택 대시보드에서 포지션 현황, 수익률 차트, 모델 성능 비교, Combo Pack 관리, 시스템 설정까지 원스톱 운영. 100+ API 엔드포인트로 모든 데이터를 실시간 제공' }
     ],
     results: {
@@ -152,7 +152,7 @@ export const PROJECT_DETAILS: Record<string, any> = {
         { value: '92K줄', label: 'Python 코드' }
       ]
     },
-    techStack: ['Python', 'XGBoost', 'LightGBM', 'CatBoost', 'SQLite (3 DB)', 'FastAPI', 'Bybit API', 'Telegram Bot', 'launchd', 'GitHub Actions', 'Plotly', 'NumPy', 'Pandas', 'scikit-learn'],
+    techStack: ['Python', 'XGBoost', 'LightGBM', 'CatBoost', 'SQLite (3 DB)', 'FastAPI', 'Exchange API', 'Telegram Bot', 'launchd', 'GitHub Actions', 'Plotly', 'NumPy', 'Pandas', 'scikit-learn'],
     learnings: {
       highlight: '트레이딩 시스템은 모델 정확도보다 운영 안정성과 리스크 관리가 핵심입니다. 아무리 백테스트 성과가 좋아도 프로덕션에서 장애가 나면 실제 자금 손실로 이어지기 때문에, 5중 안전 게이트와 자동 롤백 체계를 구축한 것이 가장 값진 설계 결정이었습니다.',
       points: [
