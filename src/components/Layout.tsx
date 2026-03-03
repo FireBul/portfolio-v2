@@ -12,7 +12,7 @@ export function Layout() {
       <header className="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="font-mono font-bold text-lg tracking-tighter">
-            CHOI_WONHYUK
+            CHOI_WONHYEOK
           </Link>
           <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
