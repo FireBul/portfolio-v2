@@ -7,6 +7,7 @@ import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { Leadership } from './pages/Leadership';
 import { Contact } from './pages/Contact';
+import { PortfolioPDF } from './pages/PortfolioPDF';
 import { Chatbot } from './components/Chatbot';
 import { InAppMessages } from './components/InAppMessages';
 import { AnalyticsGimmick } from './components/AnalyticsGimmick';
@@ -25,6 +26,22 @@ function RouteTracker() {
   return null;
 }
 
+function OverlayWidgets() {
+  const { pathname } = useLocation();
+  // PDF 페이지에서는 모든 오버레이 숨김
+  if (pathname === '/pdf') return null;
+  return (
+    <>
+      <InAppMessages />
+      <AnalyticsGimmick />
+      <MouseHeatmap />
+      <BehavioralPersona />
+      <ABTestReveal />
+      <Chatbot />
+    </>
+  );
+}
+
 function App() {
   useEffect(() => {
     const cleanup = initScrollTracking();
@@ -34,12 +51,11 @@ function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <RouteTracker />
-      <InAppMessages />
-      <AnalyticsGimmick />
-      <MouseHeatmap />
-      <BehavioralPersona />
-      <ABTestReveal />
+      <OverlayWidgets />
       <Routes>
+        {/* PDF 전용 라우트 — Layout/Chatbot 없이 독립 렌더링 */}
+        <Route path="pdf" element={<PortfolioPDF />} />
+
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
@@ -49,7 +65,6 @@ function App() {
           <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
-      <Chatbot />
     </BrowserRouter>
   );
 }
