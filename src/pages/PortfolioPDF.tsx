@@ -34,7 +34,7 @@ const FEATURED_PROJECTS = [
     title: 'AURORA — 퀀트 트레이딩 시스템',
     role: 'Full-Stack 설계 · ML · 운영',
     org: '개인 프로젝트',
-    desc: '92,000줄 Python 코드베이스의 24/7 자율 운영 시스템. XGBoost/LightGBM/CatBoost 8개 모델 앙상블, 172개 기술 지표, 5중 안전 게이트, Catalyst 24/7 모니터링 데몬',
+    desc: '500+ 커밋, 140개 파일 규모의 24/7 자율 운영 시스템. XGBoost/LightGBM/CatBoost 8개 모델 앙상블, 172개 기술 지표, 5중 안전 게이트, Catalyst 24/7 모니터링 데몬',
     metrics: [
       { value: '8개', label: 'ML 앙상블' },
       { value: '5.05', label: 'Sharpe' },
@@ -46,11 +46,11 @@ const FEATURED_PROJECTS = [
     title: 'Teflon AI 검사 자동화 시스템',
     role: 'Full-Stack 설계 · CV · 하드웨어 연동',
     org: '개인 프로젝트',
-    desc: 'YOLOv8 Nano(6.2MB) 기반 5종 결함 실시간 검출. 멀티카메라(USB/IP/Basler) 통합, GPIO/Modbus/OPC-UA 산업 프로토콜 연동, 17+ 운영 웹 UI',
+    desc: 'YOLOv8 Nano 기반 5종 결함 실시간 검출. 멀티카메라(USB/IP/Basler) 통합, GPIO/Modbus/OPC-UA 산업 프로토콜 연동, 17+ 운영 웹 UI, 97개 REST API',
     metrics: [
       { value: '33ms', label: '추론 속도' },
+      { value: '5종', label: '결함 검출' },
       { value: '97개', label: 'REST API' },
-      { value: '124개', label: '테스트' },
     ],
     stack: ['YOLOv8', 'ONNX', 'FastAPI', 'OpenCV', 'Docker', 'Modbus/OPC-UA'],
   },
@@ -133,19 +133,19 @@ export function PortfolioPDF() {
           {/* Summary */}
           <div className="mb-5">
             <p className="text-[11.5px] text-gray-700 leading-relaxed">
-              인터파크 커머스 광고/SRM팀에서 <strong>3.5년간 PM으로 근무</strong>하며, 월 50억원 거래액의 쿠폰 자동화 시스템 구축, 광고액 80% 상승 등 데이터 기반 성과를 만들어왔습니다.
-              현재는 <strong>ML 앙상블 기반 퀀트 시스템</strong>(92K줄)과 <strong>YOLOv8 기반 제조 검사 시스템</strong>(26.7K줄)을 직접 설계·운영하며 기술 역량을 확장하고 있습니다.
+              인터파크커머스에서 <strong>4년 6개월간 PM으로 근무</strong>하며, 월 50억원 거래액의 쿠폰 자동화 시스템 구축, 광고액 80% 상승 등 데이터 기반 성과를 만들어왔습니다.
+              현재는 <strong>8개 ML 앙상블 기반 퀀트 시스템</strong>(500+ 커밋, 140개 파일)과 <strong>YOLOv8 기반 제조 검사 시스템</strong>(97개 API, 5종 결함 검출)을 직접 설계·운영하며 기술 역량을 확장하고 있습니다.
             </p>
           </div>
 
           {/* Key Metrics Banner */}
           <div className="grid grid-cols-5 gap-2 mb-6">
             {[
-              { value: '3.5년+', label: 'PM 경력' },
+              { value: '4년 6개월', label: 'PM 경력' },
               { value: '50억원', label: '월 쿠폰 거래액' },
               { value: '+80%', label: '광고액 상승' },
-              { value: '92K줄', label: 'AI 트레이딩' },
-              { value: '26.7K줄', label: 'AI 검사 시스템' },
+              { value: '8개 모델', label: 'ML 앙상블' },
+              { value: '5종 검출', label: 'AI 검사 시스템' },
             ].map((m) => (
               <div key={m.label} className="text-center bg-gray-50 border border-gray-200 rounded-lg py-2.5 px-1">
                 <div className="text-[15px] font-extrabold text-indigo-600">{m.value}</div>
@@ -180,14 +180,17 @@ export function PortfolioPDF() {
               <span className="w-1 h-4 bg-indigo-500 rounded-full inline-block" />
               Experience
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-2.5">
               {/* 인터파크 */}
               <div className="border border-gray-200 rounded-lg p-3">
                 <div className="flex items-center justify-between mb-1.5">
-                  <p className="font-bold text-[11.5px]">인터파크 커머스</p>
-                  <span className="text-[9px] text-gray-400">2020.07 – 2024.01 (3년 6개월)</span>
+                  <p className="font-bold text-[11.5px]">인터파크커머스</p>
+                  <span className="text-[9px] text-gray-400">2021.06 – 2025.12 (4년 6개월)</span>
                 </div>
-                <p className="text-[10px] text-indigo-600 font-semibold mb-1.5">광고팀 PM → SRM팀 PM</p>
+                <p className="text-[10px] text-indigo-600 font-semibold mb-1.5">Product Manager · SRM팀</p>
+                <p className="text-[9.5px] text-gray-600 mb-1.5 leading-snug">
+                  판매자 관계 관리(SRM) 시스템의 PM으로서 광고, 쿠폰, 제휴 등 다양한 도메인의 제품을 기획하고 운영. 데이터 분석을 통한 사용자 행동 패턴 파악과 A/B 테스팅을 통한 개선점 도출에 집중.
+                </p>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                   {[
                     '최저가 쿠폰 자동화 시스템 구축 — 월 50억원 거래액, YoY +30%',
@@ -196,14 +199,26 @@ export function PortfolioPDF() {
                     'CPS 바이럴 광고 모델 도입 — 4개 제휴사 수익 모델 다변화',
                     'Braze + GA 연동 CRM 개인화 캠페인 설계·운영',
                     '판매자 광고센터 ADMIN 총괄 — RTB 과금, 품질관리 정책 수립',
-                    '외부 채널 2곳 연동 — 넥스트페이퍼, 노티플러스',
-                    '쿠폰 정산 로직 공정성 개선 — 수수료 부과 방식 변경',
+                    '소카테고리별 상품 등급 세팅 — YoY 월평균 수익성 20% 개선',
+                    '바이럴 광고 실적 관리 시스템 — Power BI 활용 제휴사 성과 체계화',
                   ].map((item, i) => (
                     <p key={i} className="text-[9px] text-gray-600 leading-snug flex gap-1">
                       <span className="text-indigo-400 shrink-0">▸</span> {item}
                     </p>
                   ))}
                 </div>
+              </div>
+
+              {/* 하나금융티아이 */}
+              <div className="border border-gray-200 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="font-bold text-[11.5px]">하나금융티아이</p>
+                  <span className="text-[9px] text-gray-400">2020.09 – 2021.02 (6개월)</span>
+                </div>
+                <p className="text-[10px] text-indigo-600 font-semibold mb-1.5">DT University팀 운영</p>
+                <p className="text-[9.5px] text-gray-600 leading-snug">
+                  전사 직원 대상 디지털 트랜스포메이션(DT) 교육 시스템 운영. 직원들의 DT 관련 문의 대응을 통해 업무 효율성 개선 방법을 학습.
+                </p>
               </div>
 
               {/* 개인 프로젝트 */}
@@ -214,8 +229,8 @@ export function PortfolioPDF() {
                 </div>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                   {[
-                    'AURORA — 92K줄 Python, 8개 ML 앙상블, 24/7 자율 운영 퀀트 시스템',
-                    'Teflon — YOLOv8 검사 자동화, 멀티카메라, 산업 프로토콜(GPIO/Modbus/OPC-UA)',
+                    'AURORA — 8개 ML 앙상블, 500+ 커밋, 24/7 자율 운영 퀀트 시스템',
+                    'Teflon — YOLOv8 5종 결함 검출, 멀티카메라, 산업 프로토콜 연동',
                   ].map((item, i) => (
                     <p key={i} className="text-[9px] text-gray-600 leading-snug flex gap-1">
                       <span className="text-indigo-400 shrink-0">▸</span> {item}
@@ -236,7 +251,7 @@ export function PortfolioPDF() {
               {[
                 'Python', 'SQL', 'XGBoost', 'LightGBM', 'CatBoost', 'YOLOv8',
                 'FastAPI', 'Docker', 'Kafka', 'OpenCV', 'Pandas', 'scikit-learn',
-                'GA4', 'Tableau', 'Braze', 'Figma', 'Git', 'GitHub Actions',
+                'GA4', 'Tableau', 'Power BI', 'Braze', 'Figma', 'Git',
               ].map((s) => (
                 <span key={s} className="px-2 py-0.5 bg-gray-100 border border-gray-200 rounded text-[9px] text-gray-700">
                   {s}
@@ -347,10 +362,10 @@ export function PortfolioPDF() {
 
           <div className="border border-gray-200 rounded-xl p-4 mb-6">
             <div className="flex gap-3 items-start">
-              <div className="text-[9px] text-gray-400 w-[80px] shrink-0 pt-0.5">2014 – 2020</div>
+              <div className="text-[9px] text-gray-400 w-[90px] shrink-0 pt-0.5">2014.03 – 2021.02</div>
               <div>
-                <p className="font-bold text-[11px]">건국대학교</p>
-                <p className="text-[9.5px] text-gray-600">경영학과 졸업</p>
+                <p className="font-bold text-[11px]">한성대학교</p>
+                <p className="text-[9.5px] text-gray-600">정보시스템공학과</p>
               </div>
             </div>
           </div>
