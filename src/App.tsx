@@ -10,6 +10,9 @@ import { Contact } from './pages/Contact';
 import { Chatbot } from './components/Chatbot';
 import { InAppMessages } from './components/InAppMessages';
 import { AnalyticsGimmick } from './components/AnalyticsGimmick';
+import { MouseHeatmap } from './components/MouseHeatmap';
+import { BehavioralPersona } from './components/BehavioralPersona';
+import { ABTestReveal } from './components/ABTestReveal';
 import { trackPageView, initScrollTracking } from './utils/analytics';
 
 function RouteTracker() {
@@ -33,6 +36,9 @@ function App() {
       <RouteTracker />
       <InAppMessages />
       <AnalyticsGimmick />
+      <MouseHeatmap />
+      <BehavioralPersona />
+      <ABTestReveal />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
