@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SITE_URL = 'https://firebul.github.io/portfolio-v2/';
 const QR_URL = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(SITE_URL)}`;
@@ -92,12 +93,12 @@ export function PortfolioPDF() {
           >
             🖨️ PDF로 저장 (Ctrl+P)
           </button>
-          <a
-            href="/"
+          <Link
+            to="/"
             className="px-4 py-1.5 border border-white/40 rounded-lg text-sm hover:bg-white/10 transition-colors"
           >
             ← 사이트로 돌아가기
-          </a>
+          </Link>
         </div>
 
         {/* ════════════════════════════════════════════
@@ -116,7 +117,7 @@ export function PortfolioPDF() {
               </p>
               <div className="flex gap-4 mt-2.5 text-gray-500 text-[10px]">
                 <span>✉ jarelrs@gmail.com</span>
-                <span>📱 010-5765-5765</span>
+                <span>📱 010-3810-9130</span>
                 <span>🔗 github.com/FireBul</span>
               </div>
             </div>
@@ -174,24 +175,52 @@ export function PortfolioPDF() {
           </div>
 
           {/* Experience Timeline */}
-          <div className="mb-2">
-            <h2 className="text-[13px] font-bold text-gray-900 mb-2 flex items-center gap-1.5">
+          <div className="mb-3">
+            <h2 className="text-[13px] font-bold text-gray-900 mb-2.5 flex items-center gap-1.5">
               <span className="w-1 h-4 bg-indigo-500 rounded-full inline-block" />
               Experience
             </h2>
-            <div className="space-y-2">
-              <div className="flex gap-3 items-start">
-                <div className="text-[9px] text-gray-400 w-[80px] shrink-0 pt-0.5">2020.07 – 2024.01</div>
-                <div>
-                  <p className="font-bold text-[11px]">인터파크 커머스 <span className="font-normal text-gray-500">| 광고팀 · SRM팀 PM</span></p>
-                  <p className="text-[9.5px] text-gray-600">광고 지면 기획, 쿠폰 자동화, CRM 캠페인, 외부 채널 연동, 데이터 수집 구조 개선, 정산 정책 수립</p>
+            <div className="space-y-3">
+              {/* 인터파크 */}
+              <div className="border border-gray-200 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="font-bold text-[11.5px]">인터파크 커머스</p>
+                  <span className="text-[9px] text-gray-400">2020.07 – 2024.01 (3년 6개월)</span>
+                </div>
+                <p className="text-[10px] text-indigo-600 font-semibold mb-1.5">광고팀 PM → SRM팀 PM</p>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                  {[
+                    '최저가 쿠폰 자동화 시스템 구축 — 월 50억원 거래액, YoY +30%',
+                    '상품 상세 광고 지면 신설 — A/B 테스트로 광고액 +80%, CTR +100%',
+                    'Kafka 데이터 파이프라인 재설계 — YoY 거래액 +30%',
+                    'CPS 바이럴 광고 모델 도입 — 4개 제휴사 수익 모델 다변화',
+                    'Braze + GA 연동 CRM 개인화 캠페인 설계·운영',
+                    '판매자 광고센터 ADMIN 총괄 — RTB 과금, 품질관리 정책 수립',
+                    '외부 채널 2곳 연동 — 넥스트페이퍼, 노티플러스',
+                    '쿠폰 정산 로직 공정성 개선 — 수수료 부과 방식 변경',
+                  ].map((item, i) => (
+                    <p key={i} className="text-[9px] text-gray-600 leading-snug flex gap-1">
+                      <span className="text-indigo-400 shrink-0">▸</span> {item}
+                    </p>
+                  ))}
                 </div>
               </div>
-              <div className="flex gap-3 items-start">
-                <div className="text-[9px] text-gray-400 w-[80px] shrink-0 pt-0.5">2024 – 현재</div>
-                <div>
-                  <p className="font-bold text-[11px]">개인 기술 프로젝트</p>
-                  <p className="text-[9.5px] text-gray-600">AURORA 퀀트 트레이딩 시스템 (92K줄 Python, 8 ML 앙상블), Teflon AI 검사 시스템 (YOLOv8, 산업 프로토콜)</p>
+
+              {/* 개인 프로젝트 */}
+              <div className="border border-gray-200 rounded-lg p-3">
+                <div className="flex items-center justify-between mb-1.5">
+                  <p className="font-bold text-[11.5px]">개인 기술 프로젝트 (Full-Stack)</p>
+                  <span className="text-[9px] text-gray-400">2024 – 현재</span>
+                </div>
+                <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                  {[
+                    'AURORA — 92K줄 Python, 8개 ML 앙상블, 24/7 자율 운영 퀀트 시스템',
+                    'Teflon — YOLOv8 검사 자동화, 멀티카메라, 산업 프로토콜(GPIO/Modbus/OPC-UA)',
+                  ].map((item, i) => (
+                    <p key={i} className="text-[9px] text-gray-600 leading-snug flex gap-1">
+                      <span className="text-indigo-400 shrink-0">▸</span> {item}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>
