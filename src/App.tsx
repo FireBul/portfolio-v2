@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <RouteTracker />
       <InAppMessages />
       <AnalyticsGimmick />

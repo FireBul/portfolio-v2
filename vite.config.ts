@@ -1,12 +1,29 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import {defineConfig, loadEnv} from 'vite';
+import fs from 'fs';
+import {defineConfig, loadEnv, type Plugin} from 'vite';
+
+// Copy index.html → 404.html for GitHub Pages SPA routing
+function spa404Plugin(): Plugin {
+  return {
+    name: 'spa-404',
+    closeBundle() {
+      const dist = path.resolve(__dirname, 'dist');
+      const index = path.join(dist, 'index.html');
+      const four04 = path.join(dist, '404.html');
+      if (fs.existsSync(index)) {
+        fs.copyFileSync(index, four04);
+      }
+    },
+  };
+}
 
 export default defineConfig(({mode}) => {
   const env = loadEnv(mode, '.', '');
   return {
-    plugins: [react(), tailwindcss()],
+    base: mode === 'production' ? '/portfolio-v2/' : '/',
+    plugins: [react(), tailwindcss(), spa404Plugin()],
     define: {
       'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
     },
