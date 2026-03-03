@@ -122,78 +122,86 @@ export const PROJECT_DETAILS: Record<string, any> = {
     }
   },
   'aurora-automation': {
-    subtitle: 'ML 모델의 안전한 운영 배포를 위한 검증 게이트 및 승격 체계 구축',
+    subtitle: '92,000줄 Python 코드베이스 · 8개 ML 모델 앙상블 · 5중 안전 게이트로 24/7 자율 운영되는 암호화폐 트레이딩 시스템',
     overview: {
-      background: 'ML 모델 실험 결과가 운영 환경으로 배포되는 과정에서 발생할 수 있는 리스크를 최소화하고, 배포 프로세스를 체계화할 필요성이 대두되었습니다.',
-      goal: 'shadow → canary → active 흐름을 명확히 하고, run 단위 추적 및 리스크 통제를 강화하여 운영 안정성과 의사결정 속도를 동시에 개선하는 시스템을 구축했습니다.',
+      background: 'Bybit 거래소에서 BTCUSDT를 대상으로 24시간 자율 운영되는 알고리즘 트레이딩 시스템입니다. 단순 백테스트 수준이 아니라, ML 모델 학습 → 백테스트 검증 → 실시간 시그널 생성 → 주문 실행 → 리스크 관리까지 전체 파이프라인을 직접 설계하고 운영하고 있습니다. 503회 이상의 커밋과 140개 파일, 92,000줄의 코드로 구성된 프로덕션 시스템입니다.',
+      goal: '단일 모델의 과적합 리스크를 줄이기 위해 XGBoost, LightGBM, CatBoost 기반 8개 모델을 앙상블하고, 172개 기술 지표 피처를 활용한 다중 전략 시그널을 Combo Pack 단위로 관리합니다. shadow → canary → active 3단계 승격 체계와 5중 안전 게이트(Backup/Integrity/Runtime/Promotion/Tracking)를 통해 운영 안정성을 극대화했습니다.',
       image: 'https://firebul.github.io/portfolio/assets/images/projects/aurora-file-tree.svg'
     },
     problems: [
-      { title: '배포 리스크', desc: '검증되지 않은 모델 배포로 인한 서비스 장애 위험' },
-      { title: '프로세스 부재', desc: '체계적인 모델 승격(Promotion) 프로세스 미비' },
-      { title: '추적 어려움', desc: '운영 중인 모델의 버전 및 성능 추적의 한계' }
+      { title: '단일 모델 과적합', desc: '하나의 ML 모델에 의존하면 시장 변화에 취약 — 8개 모델 앙상블과 다수결 투표(Consensus) 방식으로 해결' },
+      { title: '배포 리스크', desc: '검증 없이 실거래에 투입하면 자금 손실 위험 — Shadow/Canary/Active 3단계 승격 체계 도입' },
+      { title: '24/7 무인 운영', desc: '사람이 모니터링하지 않는 시간대의 장애 대응 — Catalyst 데몬 + Telegram 실시간 알림 + 자동 롤백' },
+      { title: '대규모 백테스트 관리', desc: '수만 개의 전략 조합을 병렬 테스트하고 추적 — Pinset 병렬 엔진(14 Worker) + run_id 기반 트래킹' }
     ],
-    solutionGoal: '안전하고 자동화된 ML 모델 배포 파이프라인을 구축하여 운영 리스크를 줄이고 모델 업데이트 주기를 단축했습니다.',
+    solutionGoal: '3개의 전용 데이터베이스(Ensemble 224MB + Trading 30MB + Pinset 416MB)로 분리된 아키텍처 위에 100개 이상의 API 엔드포인트와 9,190줄 규모의 운영 대시보드를 구축하여, 모델 실험부터 실거래까지 전 과정을 자동화하고 실시간 모니터링할 수 있는 체계를 완성했습니다.',
     process: [
-      { step: 1, title: '프로세스 설계', desc: 'Shadow, Canary, Active 단계별 검증 기준 수립' },
-      { step: 2, title: '파이프라인 구축', desc: 'CI/CD 파이프라인과 연동된 자동화된 배포 흐름 구현' },
-      { step: 3, title: '모니터링 체계', desc: '모델 성능 및 시스템 지표 모니터링 대시보드 구축' },
-      { step: 4, title: '가드레일 적용', desc: '이상 징후 발생 시 자동 롤백 및 알림 시스템 적용' }
+      { step: 1, title: '피처 엔지니어링 & 모델 학습', desc: '172개 기술 지표(RSI, MACD, Bollinger, ATR 등) 기반 피처를 설계하고, XGBoost/LightGBM/CatBoost 3종 엔진으로 8개 모델을 학습. MoE(Mixture of Experts) 앙상블로 시그널 품질 극대화' },
+      { step: 2, title: 'Pinset 대규모 병렬 백테스트', desc: '14개 Worker 프로세스로 수만 개의 전략 조합을 병렬 백테스트. Phase 2(개별 검증) → Phase 3(생존율 집계) → Combo Pack 빌드의 3단계 파이프라인으로 33,752건 거래, Sharpe 5.05, 승률 65.2% 달성' },
+      { step: 3, title: '안전 승격 체계 & 리스크 관리', desc: 'Draft → Shadow(모의 거래) → Canary(소액 실거래) → Active(정규 운영) 4단계 승격. 5중 게이트(Backup/Integrity/Runtime/Promotion/Tracking Key) 모두 통과해야 다음 단계로 진입' },
+      { step: 4, title: '실시간 운영 & 모니터링', desc: '5개 Canary Trader 인스턴스가 Bybit에서 동시 운영. Catalyst 24/7 데몬이 헬스체크, PID 모니터링, DB 성장률 감시를 수행하고 Telegram으로 실시간 알림 전송' },
+      { step: 5, title: '대시보드 & 의사결정 지원', desc: '9,190줄 규모의 풀스택 대시보드에서 포지션 현황, 수익률 차트, 모델 성능 비교, Combo Pack 관리, 시스템 설정까지 원스톱 운영. 100+ API 엔드포인트로 모든 데이터를 실시간 제공' }
     ],
     results: {
-      before: '수동/비정형 배포',
-      after: '체계적 자동화 배포',
+      before: '수동 분석 & 단일 모델',
+      after: '24/7 자율 운영 시스템',
       metrics: [
-        { value: '승격 체계', label: '운영 방식 정립' },
-        { value: '안정성', label: '운영 리스크 감소' },
-        { value: '가드레일', label: '통제력 강화' }
+        { value: '8개', label: 'ML 앙상블 모델' },
+        { value: '5.05', label: 'Sharpe Ratio' },
+        { value: '65.2%', label: 'Win Rate' },
+        { value: '92K줄', label: 'Python 코드' }
       ]
     },
-    techStack: ['MLOps', 'CI/CD', 'Monitoring', 'Python', 'Kubernetes'],
+    techStack: ['Python', 'XGBoost', 'LightGBM', 'CatBoost', 'SQLite (3 DB)', 'FastAPI', 'Bybit API', 'Telegram Bot', 'launchd', 'GitHub Actions', 'Plotly', 'NumPy', 'Pandas', 'scikit-learn'],
     learnings: {
-      highlight: '모델의 성능뿐만 아니라 운영 환경에서의 안정성과 배포 프로세스의 체계화가 ML 프로젝트의 성공에 필수적임을 확인했습니다.',
+      highlight: '트레이딩 시스템은 모델 정확도보다 운영 안정성과 리스크 관리가 핵심입니다. 아무리 백테스트 성과가 좋아도 프로덕션에서 장애가 나면 실제 자금 손실로 이어지기 때문에, 5중 안전 게이트와 자동 롤백 체계를 구축한 것이 가장 값진 설계 결정이었습니다.',
       points: [
-        '운영 안정성: 서비스 장애를 최소화하는 방어적 배포 전략',
-        '자동화의 힘: 수동 개입을 줄여 휴먼 에러 방지 및 속도 향상',
-        '지속적 모니터링: 배포 후 모델 성능 저하(Drift)에 대한 빠른 대응'
+        '앙상블이 단일 모델을 이긴다: 8개 모델의 다수결 투표가 과적합을 효과적으로 방어하며, MoE 구조가 시장 국면별 전문화를 가능하게 함',
+        '안전 게이트가 수익을 지킨다: Shadow → Canary → Active 승격 체계로 검증되지 않은 전략의 실거래 투입을 원천 차단',
+        '24/7 무인 운영의 핵심은 관측성: Catalyst 데몬 + Telegram 알림 + 대시보드 3중 모니터링이 없었다면 야간 장애 대응이 불가능했을 것',
+        '대규모 병렬 백테스트의 트래킹: run_id/pack_id/decision_uid 기반 추적 체계가 없으면 수만 건의 실험 결과가 의미를 잃음'
       ]
     }
   },
   'teflon-inspection': {
-    subtitle: '비전 기반 검사 자동화의 현장 적용성 및 운영 효율성 극대화',
+    subtitle: '26,700줄 Python · YOLOv8 실시간 결함 검출 · 97개 REST API · 멀티카메라 · 산업 프로토콜 통합의 풀스택 제조 검사 자동화 시스템',
     overview: {
-      background: '제조 현장의 테플론 검사 공정을 자동화하기 위해 비전 모델을 도입했으나, 실제 현장 작업자들이 사용하기에 불편함이 있었고 유지보수가 어려웠습니다.',
-      goal: '검사 자동화를 모델 성능 중심이 아니라 현장 배포 및 운영 관점으로 확장하여, 카메라 연결 안정화, 운영 UI 구조, 업그레이드 흐름까지 전체 시스템을 재설계했습니다.',
+      background: '테플론 코팅 제품의 결함 검사를 수작업으로 진행하던 제조 현장에서, 검사 속도와 일관성을 높이기 위해 비전 AI 기반 자동화 시스템을 도입했습니다. 단순히 AI 모델만 만드는 것이 아니라, 현장 작업자가 실제로 사용할 수 있는 완전한 시스템(카메라 연동, 산업 프로토콜 통신, 운영 UI, 관리자 대시보드)을 처음부터 끝까지 직접 설계하고 구축했습니다.',
+      goal: 'YOLOv8 Nano 모델(6.2MB)로 5종 결함(스크래치, 기포, 이물질, 변색, 코팅 불량)을 33ms 이내에 실시간 검출하고, USB/IP/iPhone/Basler 등 다양한 산업용 카메라를 통합 지원하며, GPIO/Modbus/OPC-UA 프로토콜을 통해 제조 라인의 PLC와 직접 통신하는 엔드투엔드 검사 시스템을 완성했습니다.',
       image: 'https://firebul.github.io/portfolio/assets/images/projects/teflon-file-tree.svg'
     },
     problems: [
-      { title: '현장 사용성 저하', desc: '작업자 친화적이지 않은 UI 및 복잡한 조작' },
-      { title: '시스템 불안정', desc: '카메라 연결 끊김 등 하드웨어 연동 이슈' },
-      { title: '유지보수 어려움', desc: '모델 업데이트 및 시스템 업그레이드 프로세스 부재' }
+      { title: '수작업 검사의 한계', desc: '사람 눈에 의존한 검사는 피로도에 따라 검출률이 크게 변동 — AI 모델로 일관된 품질 확보' },
+      { title: '다양한 카메라 환경', desc: 'USB, IP, iPhone, Basler 등 현장마다 다른 카메라 — 통합 카메라 추상화 레이어로 기종 무관 대응' },
+      { title: '산업 프로토콜 통합', desc: '제조 라인의 PLC와 실시간 연동 필요 — GPIO/Modbus RTU/TCP/OPC-UA 3종 프로토콜 드라이버 구현' },
+      { title: '현장 작업자 사용성', desc: 'IT 비전문가인 작업자가 3교대로 사용 — 17개 이상의 직관적 웹 UI 페이지와 원클릭 Docker 배포' }
     ],
-    solutionGoal: '현장 작업자가 쉽게 사용할 수 있는 직관적인 UI를 제공하고, 시스템 안정성을 확보하여 실제 제조 라인에 성공적으로 안착시켰습니다.',
+    solutionGoal: '23개 모듈, 26,700줄의 Python 코드로 구성된 풀스택 시스템을 구축했습니다. 97개의 REST API 엔드포인트로 검사 실행, 결과 조회, 카메라 제어, 시스템 설정까지 모든 기능을 제공하고, 124개의 테스트 케이스로 안정성을 검증했습니다.',
     process: [
-      { step: 1, title: '현장 요구사항 수집', desc: '실제 작업자 인터뷰 및 페인포인트 도출' },
-      { step: 2, title: 'UI/UX 재설계', desc: '직관적이고 조작이 간편한 운영 화면 기획' },
-      { step: 3, title: '안정성 강화', desc: '하드웨어 연동 로직 개선 및 예외 처리 강화' },
-      { step: 4, title: '배포 프로세스', desc: '무중단 모델 업데이트 및 시스템 업그레이드 체계 구축' }
+      { step: 1, title: 'AI 모델 설계 & 학습', desc: 'YOLOv8 Nano(6.2MB) 경량 모델로 5종 결함을 학습. 33ms 이내 추론 속도로 실시간 라인 검사 가능. ONNX 포맷 변환으로 다양한 하드웨어에서 배포 가능' },
+      { step: 2, title: '멀티카메라 통합', desc: 'USB 카메라(UVC), IP 카메라(RTSP/ONVIF), iPhone(WiFi), Basler 산업용 카메라를 통합 지원하는 추상화 레이어 설계. 현장별 카메라 기종에 무관하게 동일한 검사 파이프라인 적용' },
+      { step: 3, title: '산업 프로토콜 & 하드웨어 연동', desc: 'GPIO(직접 I/O), Modbus RTU/TCP(시리얼/이더넷 PLC), OPC-UA(표준 산업 통신) 3종 프로토콜 드라이버를 구현하여 제조 라인의 PLC, 센서, 액추에이터와 실시간 양방향 통신' },
+      { step: 4, title: '운영 웹 UI & 대시보드', desc: '17개 이상의 웹 페이지로 실시간 검사 화면, 결과 이력, 통계 대시보드, 카메라 설정, 모델 관리, 사용자/교대 관리 등 전체 운영 기능 제공. 3교대 작업자 계정 관리 및 교대별 검사 이력 추적' },
+      { step: 5, title: '배포 & 품질 보증', desc: 'Docker Compose 기반 원클릭 배포로 현장 설치 간소화. 124개 테스트 케이스(단위/통합/E2E)로 코드 안정성 확보. 97개 REST API로 외부 MES/ERP 시스템 연동 가능' }
     ],
     results: {
-      before: '모델 성능 중심',
-      after: '현장 운영 중심',
+      before: '수작업 육안 검사',
+      after: 'AI 실시간 자동 검사',
       metrics: [
-        { value: '비전 기반', label: '핵심 기술' },
-        { value: '적용성 향상', label: '운영 성과' },
-        { value: '배포 고려', label: '시스템 특징' }
+        { value: '33ms', label: '추론 속도' },
+        { value: '5종', label: '결함 검출 클래스' },
+        { value: '97개', label: 'REST API' },
+        { value: '124개', label: '테스트 케이스' }
       ]
     },
-    techStack: ['Computer Vision', 'UI/UX Design', 'Hardware Integration', 'Python'],
+    techStack: ['Python', 'YOLOv8', 'ONNX', 'FastAPI', 'OpenCV', 'Docker', 'SQLite', 'GPIO', 'Modbus RTU/TCP', 'OPC-UA', 'ONVIF', 'RTSP', 'Basler Pylon', 'HTML/CSS/JS', 'Pytest'],
     learnings: {
-      highlight: 'AI 모델의 성능이 아무리 좋아도, 실제 현장에서 사용하기 불편하다면 가치를 창출할 수 없다는 것을 깊이 깨달았습니다. 기술 중심이 아닌 사용자 중심의 접근이 중요합니다.',
+      highlight: 'AI 모델의 정확도는 전체 시스템의 10%에 불과합니다. 나머지 90%는 카메라 연동, 산업 프로토콜 통신, 현장 UI, 배포 자동화, 테스트 등 "모델 바깥의 엔지니어링"입니다. 현장에서 실제로 쓸 수 있는 시스템을 만드는 것이 진짜 가치입니다.',
       points: [
-        '사용자 중심 설계: 현장 작업자의 눈높이에 맞춘 UI/UX',
-        '시스템 안정성: 예기치 않은 하드웨어 이슈에 대한 견고한 대응',
-        '운영 관점: 개발 이후의 유지보수 및 업그레이드까지 고려한 설계'
+        'Edge AI의 현실: 6.2MB YOLOv8 Nano로 33ms 추론 — 경량 모델이 현장에서는 더 실용적',
+        '산업 프로토콜의 복잡성: GPIO/Modbus/OPC-UA 각각의 타이밍, 에러 핸들링, 재연결 로직이 모델 개발보다 더 도전적',
+        '멀티카메라 추상화의 가치: 카메라 기종에 무관한 통합 레이어 덕분에 새로운 현장 배포 시 설정만 변경하면 즉시 적용',
+        '테스트가 현장 신뢰를 만든다: 124개 테스트 케이스가 현장 배포 시 "동작 보장"에 대한 확신을 제공'
       ]
     }
   }

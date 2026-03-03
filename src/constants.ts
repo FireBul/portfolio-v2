@@ -121,30 +121,30 @@ export const PROJECTS = [
   },
   {
     id: 'aurora-automation',
-    title: 'AURORA 운영 자동화 (Private Summary)',
+    title: 'AURORA — AI 트레이딩 시스템 (Private)',
     category: 'private',
-    description: '모델 실험 결과를 운영 단계로 안전하게 넘기기 위해 검증 게이트와 승격 체계를 정비한 프로젝트입니다. shadow → canary → active 흐름을 명확히 하고, run 단위 추적·리스크 통제를 강화해 운영 안정성과 의사결정 속도를 동시에 개선했습니다.',
+    description: '92,000줄 Python 코드베이스의 24/7 자율 운영 암호화폐 트레이딩 시스템입니다. XGBoost/LightGBM/CatBoost 기반 8개 ML 앙상블 모델, 172개 기술 지표, 5중 안전 게이트, Catalyst 24/7 모니터링 데몬으로 Bybit에서 실시간 운영 중입니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/data-structure.png',
-    tags: ['ML Ops', '자동화', 'PM'],
+    tags: ['ML 앙상블', '자동화', 'Full-Stack'],
     link: '/projects/aurora-automation',
     metrics: [
-      { label: '운영 방식', value: '승격 체계 정립' },
-      { label: '핵심 성과', value: '운영 안정성 향상' },
-      { label: '리스크', value: '가드레일 강화' }
+      { label: 'ML 모델', value: '8개 앙상블' },
+      { label: 'Sharpe', value: '5.05' },
+      { label: 'Win Rate', value: '65.2%' }
     ]
   },
   {
     id: 'teflon-inspection',
-    title: 'Teflon Inspection Automation (Private Summary)',
+    title: 'Teflon AI 검사 자동화 시스템 (Private)',
     category: 'private',
-    description: '검사 자동화를 모델 성능 중심이 아니라 현장 배포 관점으로 확장한 프로젝트입니다. 카메라 연결 안정화, 운영 UI 구조, 업그레이드 흐름까지 함께 설계해 실사용성을 높였습니다.',
+    description: 'YOLOv8 기반 실시간 결함 검출, 멀티카메라(USB/IP/Basler) 통합, GPIO/Modbus/OPC-UA 산업 프로토콜 연동까지 갖춘 풀스택 제조 검사 자동화 시스템입니다. 26,700줄 Python, 97개 REST API, 124개 테스트 케이스로 구성됩니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/seller-admin.png',
-    tags: ['Computer Vision', '운영 UI', 'PM'],
+    tags: ['YOLOv8', '산업 IoT', 'Full-Stack'],
     link: '/projects/teflon-inspection',
     metrics: [
-      { label: '핵심 기술', value: '비전 기반 자동화' },
-      { label: '운영 성과', value: '현장 적용성 향상' },
-      { label: '특징', value: '배포/업그레이드 고려' }
+      { label: '추론 속도', value: '33ms' },
+      { label: 'REST API', value: '97개' },
+      { label: '결함 검출', value: '5종 클래스' }
     ]
   }
 ];
