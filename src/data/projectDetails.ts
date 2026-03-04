@@ -126,7 +126,7 @@ export const PROJECT_DETAILS: Record<string, any> = {
     overview: {
       background: '글로벌 파생상품 시장을 대상으로 24시간 자율 운영되는 알고리즘 트레이딩 시스템입니다. 단순 백테스트 수준이 아니라, ML 모델 학습 → 백테스트 검증 → 실시간 시그널 생성 → 주문 실행 → 리스크 관리까지 전체 파이프라인을 직접 설계하고 운영하고 있습니다. 503회 이상의 커밋과 140개 파일, 92,000줄의 코드로 구성된 프로덕션 시스템입니다.',
       goal: '단일 모델의 과적합 리스크를 줄이기 위해 XGBoost, LightGBM, CatBoost 기반 8개 모델을 앙상블하고, 172개 기술 지표 피처를 활용한 다중 전략 시그널을 Combo Pack 단위로 관리합니다. shadow → canary → active 3단계 승격 체계와 5중 안전 게이트(Backup/Integrity/Runtime/Promotion/Tracking)를 통해 운영 안정성을 극대화했습니다.',
-      image: 'https://firebul.github.io/portfolio/assets/images/projects/aurora-file-tree.svg'
+      image: 'https://firebul.github.io/portfolio/assets/images/projects/aurora-dashboard.png'
     },
     problems: [
       { title: '단일 모델 과적합', desc: '하나의 ML 모델에 의존하면 시장 변화에 취약 — 8개 모델 앙상블과 다수결 투표(Consensus) 방식으로 해결' },
@@ -168,7 +168,7 @@ export const PROJECT_DETAILS: Record<string, any> = {
     overview: {
       background: '테플론 코팅 제품의 결함 검사를 수작업으로 진행하던 제조 현장에서, 검사 속도와 일관성을 높이기 위해 비전 AI 기반 자동화 시스템을 도입했습니다. 단순히 AI 모델만 만드는 것이 아니라, 현장 작업자가 실제로 사용할 수 있는 완전한 시스템(카메라 연동, 산업 프로토콜 통신, 운영 UI, 관리자 대시보드)을 처음부터 끝까지 직접 설계하고 구축했습니다.',
       goal: 'YOLOv8 Nano 모델(6.2MB)로 5종 결함(스크래치, 기포, 이물질, 변색, 코팅 불량)을 33ms 이내에 실시간 검출하고, USB/IP/iPhone/Basler 등 다양한 산업용 카메라를 통합 지원하며, GPIO/Modbus/OPC-UA 프로토콜을 통해 제조 라인의 PLC와 직접 통신하는 엔드투엔드 검사 시스템을 완성했습니다.',
-      image: 'https://firebul.github.io/portfolio/assets/images/projects/teflon-file-tree.svg'
+      image: 'https://firebul.github.io/portfolio/assets/images/projects/teflon-dashboard.png'
     },
     problems: [
       { title: '수작업 검사의 한계', desc: '사람 눈에 의존한 검사는 피로도에 따라 검출률이 크게 변동 — AI 모델로 일관된 품질 확보' },

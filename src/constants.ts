@@ -124,7 +124,7 @@ export const PROJECTS = [
     title: 'AURORA — AI 트레이딩 시스템 (Private)',
     category: 'private',
     description: '92,000줄 Python 코드베이스의 24/7 자율 운영 퀀트 트레이딩 시스템입니다. XGBoost/LightGBM/CatBoost 기반 8개 ML 앙상블 모델, 172개 기술 지표, 5중 안전 게이트, Catalyst 24/7 모니터링 데몬으로 글로벌 파생상품 거래소에서 실시간 운영 중입니다.',
-    image: 'https://firebul.github.io/portfolio/assets/images/projects/data-structure.png',
+    image: 'https://firebul.github.io/portfolio/assets/images/projects/aurora-dashboard.png',
     tags: ['ML 앙상블', '자동화', 'Full-Stack'],
     link: '/projects/aurora-automation',
     metrics: [
@@ -138,7 +138,7 @@ export const PROJECTS = [
     title: 'Teflon AI 검사 자동화 시스템 (Private)',
     category: 'private',
     description: 'YOLOv8 기반 실시간 결함 검출, 멀티카메라(USB/IP/Basler) 통합, GPIO/Modbus/OPC-UA 산업 프로토콜 연동까지 갖춘 풀스택 제조 검사 자동화 시스템입니다. 26,700줄 Python, 97개 REST API, 124개 테스트 케이스로 구성됩니다.',
-    image: 'https://firebul.github.io/portfolio/assets/images/projects/seller-admin.png',
+    image: 'https://firebul.github.io/portfolio/assets/images/projects/teflon-dashboard.png',
     tags: ['YOLOv8', '산업 IoT', 'Full-Stack'],
     link: '/projects/teflon-inspection',
     metrics: [
