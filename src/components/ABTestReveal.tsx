@@ -1,55 +1,52 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FlaskConical, X } from 'lucide-react';
+import { FlaskConical, X, Loader2 } from 'lucide-react';
+import { trackABEvent, fetchABStats, type ABStats } from '../utils/supabase';
 
-type Group = 'A' | 'B';
+export type Group = 'A' | 'B';
 
-const VARIANTS = {
+export const VARIANTS: Record<Group, string> = {
   A: '프로젝트 보기',
   B: '어떤 일을 했는지 확인하기 →',
 };
 
-const getOrAssignGroup = (): Group => {
+export const getOrAssignGroup = (): Group => {
   const stored = localStorage.getItem('eng_ab_group');
   if (stored === 'A' || stored === 'B') return stored;
   const group: Group = Math.random() < 0.5 ? 'A' : 'B';
   localStorage.setItem('eng_ab_group', group);
   localStorage.setItem('eng_ab_assigned_at', String(Date.now()));
+  // 신규 배정 → Supabase에 기록
+  trackABEvent(group, 'assignment');
   return group;
-};
-
-const getSimulatedResults = () => {
-  const seed = new Date().toISOString().slice(0, 10);
-  const hash = Array.from(seed).reduce((h, c) => ((h << 5) - h + c.charCodeAt(0)) | 0, 0);
-  const aRate = (Math.abs(hash) % 30) + 35;
-  const bRate = 100 - aRate;
-  const total = (Math.abs(hash) % 50) + 30;
-  const aVisitors = Math.round(total * 0.48);
-  const bVisitors = total - aVisitors;
-  const winner: Group = aRate > bRate ? 'A' : 'B';
-  const lift = Math.abs(aRate - bRate);
-
-  return {
-    a: { visitors: aVisitors, rate: aRate },
-    b: { visitors: bVisitors, rate: bRate },
-    total,
-    winner,
-    lift,
-    significance: lift > 10 ? '95%' : lift > 5 ? '80%' : 'collecting...',
-  };
 };
 
 export const ABTestReveal: React.FC = () => {
   const [panelOpen, setPanelOpen] = useState(false);
   const [badgeVisible, setBadgeVisible] = useState(false);
+  const [stats, setStats] = useState<ABStats | null>(null);
+  const [loading, setLoading] = useState(false);
   const group = useMemo(getOrAssignGroup, []);
-  const stats = useMemo(getSimulatedResults, []);
 
   // Show badge after 4s
   useEffect(() => {
     const timer = setTimeout(() => setBadgeVisible(true), 4000);
     return () => clearTimeout(timer);
   }, []);
+
+  // 패널 열릴 때 실시간 통계 fetch (lazy)
+  useEffect(() => {
+    if (!panelOpen) return;
+    let cancelled = false;
+    setLoading(true);
+    fetchABStats().then((result) => {
+      if (!cancelled) {
+        setStats(result);
+        setLoading(false);
+      }
+    });
+    return () => { cancelled = true; };
+  }, [panelOpen]);
 
   return (
     <>
@@ -136,45 +133,61 @@ export const ABTestReveal: React.FC = () => {
                 ))}
               </div>
 
-              {/* Result Bars */}
-              <div className="space-y-2">
-                {(['A', 'B'] as Group[]).map((g) => {
-                  const s = g === 'A' ? stats.a : stats.b;
-                  return (
-                    <div key={g} className="flex items-center gap-2">
-                      <span className="w-4 text-xs font-bold text-zinc-500">{g}</span>
-                      <div className="flex-1 h-5 bg-white/5 rounded-md overflow-hidden relative">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${s.rate}%` }}
-                          transition={{ duration: 0.8, delay: 0.3 }}
-                          className={`h-full rounded-md ${
-                            g === 'A'
-                              ? 'bg-gradient-to-r from-blue-600 to-blue-500'
-                              : 'bg-gradient-to-r from-purple-600 to-purple-500'
-                          }`}
-                        />
-                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold text-white">
-                          {s.rate}%
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              {/* Result Bars — 실시간 Supabase 데이터 */}
+              {loading ? (
+                <div className="flex items-center justify-center gap-2 py-4 text-zinc-500 text-sm">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  통계 로딩 중...
+                </div>
+              ) : stats ? (
+                <>
+                  <div className="space-y-2">
+                    {(['A', 'B'] as Group[]).map((g) => {
+                      const s = g === 'A' ? stats.a : stats.b;
+                      return (
+                        <div key={g} className="flex items-center gap-2">
+                          <span className="w-4 text-xs font-bold text-zinc-500">{g}</span>
+                          <div className="flex-1 h-5 bg-white/5 rounded-md overflow-hidden relative">
+                            <motion.div
+                              initial={{ width: 0 }}
+                              animate={{ width: `${s.rate}%` }}
+                              transition={{ duration: 0.8, delay: 0.3 }}
+                              className={`h-full rounded-md ${
+                                g === 'A'
+                                  ? 'bg-gradient-to-r from-blue-600 to-blue-500'
+                                  : 'bg-gradient-to-r from-purple-600 to-purple-500'
+                              }`}
+                            />
+                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[11px] font-bold text-white">
+                              {s.rate}%
+                            </span>
+                          </div>
+                          <span className="text-[10px] text-zinc-500 w-16 text-right">
+                            {s.clicks}/{s.visitors}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
 
-              {/* Meta */}
-              <p className="text-center text-zinc-500 text-[11px]">
-                총 {stats.total}명 · 현재 리더:{' '}
-                <span className="text-white font-medium">Group {stats.winner}</span>
-                {stats.winner === group && ' (당신의 그룹!)'} · 유의도: {stats.significance}
-              </p>
+                  {/* Meta */}
+                  <p className="text-center text-zinc-500 text-[11px]">
+                    총 {stats.total}명 · 현재 리더:{' '}
+                    <span className="text-white font-medium">Group {stats.winner}</span>
+                    {stats.winner === group && ' (당신의 그룹!)'} · 유의도: {stats.significance}
+                  </p>
+                </>
+              ) : (
+                <div className="text-center text-zinc-500 text-sm py-4">
+                  통계를 불러올 수 없습니다 (오프라인)
+                </div>
+              )}
             </div>
 
             {/* Footer */}
             <div className="bg-white/[0.02] border-t border-white/5 px-4 py-2.5 text-center">
               <p className="text-zinc-600 text-[10px]">
-                CTA 버튼 문구를 실제로 A/B 테스트 중입니다 · 그로스 실험 역량 데모
+                CTA 버튼 문구를 실제 A/B 테스트 중입니다 · Supabase 실시간 추적
               </p>
             </div>
           </motion.div>

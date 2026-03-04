@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useMemo, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronRight, BarChart3, Target, Zap } from 'lucide-react';
 import { KEY_METRICS, PROJECTS } from '../constants';
+import { getOrAssignGroup, VARIANTS } from '../components/ABTestReveal';
+import { trackABEvent } from '../utils/supabase';
 
 const container = {
   hidden: { opacity: 0 },
@@ -20,6 +22,17 @@ const item = {
 };
 
 export function Home() {
+  const group = useMemo(() => getOrAssignGroup(), []);
+
+  // impression 트래킹 (visitor당 1회)
+  useEffect(() => {
+    trackABEvent(group, 'impression', '/');
+  }, [group]);
+
+  const handleCTAClick = useCallback(() => {
+    trackABEvent(group, 'click', '/');
+  }, [group]);
+
   return (
     <motion.div
       variants={container}
@@ -46,8 +59,8 @@ export function Home() {
           </motion.p>
           
           <motion.div variants={item} className="flex flex-wrap gap-4 pt-4">
-            <Link to="/projects" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-500 text-black font-bold hover:bg-emerald-400 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-              프로젝트 보기 <ArrowRight className="w-4 h-4" />
+            <Link to="/projects" onClick={handleCTAClick} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-500 text-black font-bold hover:bg-emerald-400 transition-colors shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+              {VARIANTS[group]} <ArrowRight className="w-4 h-4" />
             </Link>
             <Link to="/about" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-semibold hover:bg-zinc-200 transition-colors">
               핵심 역량
