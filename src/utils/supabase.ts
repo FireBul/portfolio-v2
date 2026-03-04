@@ -5,7 +5,7 @@ import { getSessionId } from './analytics';
 
 let client: SupabaseClient | null = null;
 
-function getSupabase(): SupabaseClient | null {
+export function getSupabase(): SupabaseClient | null {
   if (client) return client;
   const url = import.meta.env.VITE_SUPABASE_URL as string;
   const key = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
@@ -27,23 +27,17 @@ export function getVisitorId(): string {
   return id;
 }
 
-/* ── Event Tracking ── */
+/* ── A/B Event Tracking ── */
 
 const TEST_NAME = 'cta_text_v1';
 
 type EventType = 'assignment' | 'impression' | 'click';
 
-/**
- * Fire-and-forget A/B event tracker.
- * - assignment / impression: localStorage로 중복 방지 (visitor당 1회)
- * - click: 매 클릭 기록
- */
 export async function trackABEvent(
   variant: 'A' | 'B',
   eventType: EventType,
   pagePath?: string,
 ): Promise<void> {
-  // assignment, impression은 visitor당 1회만
   if (eventType !== 'click') {
     const dedupeKey = `ab_sent_${TEST_NAME}_${eventType}`;
     if (localStorage.getItem(dedupeKey)) return;
@@ -51,7 +45,7 @@ export async function trackABEvent(
   }
 
   const sb = getSupabase();
-  if (!sb) return; // 환경변수 없으면 silent no-op
+  if (!sb) return;
 
   try {
     const { error } = await sb.from('ab_events').insert({
@@ -68,7 +62,83 @@ export async function trackABEvent(
   }
 }
 
-/* ── Aggregation ── */
+/* ── Visitor Tracking ── */
+
+function parseUserAgent(): { os: string; browser: string; deviceType: string } {
+  const ua = navigator.userAgent;
+
+  // OS
+  let os = 'Unknown';
+  if (/Windows/i.test(ua)) os = 'Windows';
+  else if (/Mac OS X|Macintosh/i.test(ua)) os = /iPhone|iPad|iPod/i.test(ua) ? 'iOS' : 'macOS';
+  else if (/Android/i.test(ua)) os = 'Android';
+  else if (/Linux/i.test(ua)) os = 'Linux';
+  else if (/CrOS/i.test(ua)) os = 'ChromeOS';
+
+  // Browser
+  let browser = 'Unknown';
+  if (/Edg\//i.test(ua)) browser = 'Edge';
+  else if (/OPR|Opera/i.test(ua)) browser = 'Opera';
+  else if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = 'Chrome';
+  else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+  else if (/Firefox/i.test(ua)) browser = 'Firefox';
+
+  // Device type
+  let deviceType = 'Desktop';
+  if (/Mobi|Android/i.test(ua) && !/iPad/i.test(ua)) deviceType = 'Mobile';
+  else if (/iPad|Tablet/i.test(ua) || (screen.width >= 768 && screen.width <= 1024 && 'ontouchstart' in window)) deviceType = 'Tablet';
+
+  return { os, browser, deviceType };
+}
+
+export async function trackVisitor(): Promise<void> {
+  const dedupeKey = 'visitor_tracked';
+  if (localStorage.getItem(dedupeKey)) return;
+  localStorage.setItem(dedupeKey, '1');
+
+  const sb = getSupabase();
+  if (!sb) return;
+
+  const { os, browser, deviceType } = parseUserAgent();
+  const screenRes = `${screen.width}x${screen.height}`;
+  const language = navigator.language || 'unknown';
+  const referrer = document.referrer ? new URL(document.referrer).hostname : 'direct';
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
+
+  // IP geolocation (fire-and-forget, non-blocking)
+  let country = 'unknown';
+  let city = 'unknown';
+  try {
+    const geo = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+    if (geo.ok) {
+      const data = await geo.json();
+      country = data.country_name || 'unknown';
+      city = data.city || 'unknown';
+    }
+  } catch {
+    // geolocation 실패해도 무시
+  }
+
+  try {
+    const { error } = await sb.from('visitors').upsert({
+      visitor_id: getVisitorId(),
+      os,
+      browser,
+      device_type: deviceType,
+      screen_res: screenRes,
+      language,
+      referrer,
+      country,
+      city,
+      timezone,
+    }, { onConflict: 'visitor_id' });
+    if (error) console.warn('[Visitor] upsert error:', error.message);
+  } catch (err) {
+    console.warn('[Visitor] network error:', err);
+  }
+}
+
+/* ── A/B Stats Aggregation ── */
 
 export interface ABStats {
   a: { visitors: number; clicks: number; rate: number };
@@ -79,10 +149,6 @@ export interface ABStats {
   significance: string;
 }
 
-/**
- * ab_test_summary 뷰에서 실시간 통계 fetch.
- * Supabase 미설정/오프라인이면 null 반환.
- */
 export async function fetchABStats(): Promise<ABStats | null> {
   const sb = getSupabase();
   if (!sb) return null;
@@ -127,6 +193,45 @@ export async function fetchABStats(): Promise<ABStats | null> {
     };
   } catch (err) {
     console.warn('[AB] fetchABStats network error:', err);
+    return null;
+  }
+}
+
+/* ── Visitor Analytics ── */
+
+export interface VisitorStats {
+  total: number;
+  os: Record<string, number>;
+  browser: Record<string, number>;
+  device: Record<string, number>;
+  country: Record<string, number>;
+  topReferrers: Record<string, number>;
+}
+
+export async function fetchVisitorStats(): Promise<VisitorStats | null> {
+  const sb = getSupabase();
+  if (!sb) return null;
+
+  try {
+    const { data, error } = await sb.from('visitors').select('os, browser, device_type, country, referrer');
+    if (error || !data) return null;
+
+    const os: Record<string, number> = {};
+    const browser: Record<string, number> = {};
+    const device: Record<string, number> = {};
+    const country: Record<string, number> = {};
+    const referrer: Record<string, number> = {};
+
+    for (const row of data) {
+      os[row.os || 'Unknown'] = (os[row.os || 'Unknown'] || 0) + 1;
+      browser[row.browser || 'Unknown'] = (browser[row.browser || 'Unknown'] || 0) + 1;
+      device[row.device_type || 'Unknown'] = (device[row.device_type || 'Unknown'] || 0) + 1;
+      country[row.country || 'Unknown'] = (country[row.country || 'Unknown'] || 0) + 1;
+      referrer[row.referrer || 'direct'] = (referrer[row.referrer || 'direct'] || 0) + 1;
+    }
+
+    return { total: data.length, os, browser, device, country, topReferrers: referrer };
+  } catch {
     return null;
   }
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronRight, BarChart3, Target, Zap } from 'lucide-react';
 import { KEY_METRICS, PROJECTS } from '../constants';
 import { getOrAssignGroup, VARIANTS } from '../components/ABTestReveal';
-import { trackABEvent } from '../utils/supabase';
+import { trackABEvent, trackVisitor } from '../utils/supabase';
 
 const container = {
   hidden: { opacity: 0 },
@@ -24,9 +24,10 @@ const item = {
 export function Home() {
   const group = useMemo(() => getOrAssignGroup(), []);
 
-  // impression 트래킹 (visitor당 1회)
+  // impression 트래킹 (visitor당 1회) + 방문자 정보 수집
   useEffect(() => {
     trackABEvent(group, 'impression', '/');
+    trackVisitor();
   }, [group]);
 
   const handleCTAClick = useCallback(() => {
