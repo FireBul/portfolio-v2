@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Github, Linkedin, CheckCircle } from 'lucide-react';
+import { Mail, Phone, Github, Linkedin, Instagram, CheckCircle } from 'lucide-react';
 import { submitLead } from '../utils/crm';
 
 const container = {
@@ -88,6 +88,18 @@ export function Contact() {
                   <Github className="w-5 h-5" />
                 </div>
                 <span className="text-lg">github.com/FireBul</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <h2 className="text-2xl font-bold tracking-tight">Music</h2>
+            <div className="space-y-4">
+              <a href="https://www.instagram.com/mode.ensemble/" target="_blank" rel="noreferrer" className="flex items-center gap-4 text-zinc-400 hover:text-emerald-400 transition-colors group">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-emerald-400/10 transition-colors">
+                  <Instagram className="w-5 h-5" />
+                </div>
+                <span className="text-lg">@mode.ensemble</span>
               </a>
             </div>
           </div>
