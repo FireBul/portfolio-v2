@@ -27,7 +27,15 @@ export function ProjectDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [id]);
+    // Block indexing for private projects
+    if (project?.category === 'private') {
+      const meta = document.createElement('meta');
+      meta.name = 'robots';
+      meta.content = 'noindex, nofollow';
+      document.head.appendChild(meta);
+      return () => { document.head.removeChild(meta); };
+    }
+  }, [id, project]);
 
   if (!project) {
     return (

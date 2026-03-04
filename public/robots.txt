@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /projects/ai-trading-engine
+Disallow: /projects/teflon-inspection
+Disallow: /leadership
 
 Sitemap: https://firebul.github.io/portfolio-v2/sitemap.xml
