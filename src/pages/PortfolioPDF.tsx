@@ -351,133 +351,123 @@ export function PortfolioPDF() {
         {/* ════════════════════════════════════════════
             PAGE 3 — 기타 프로젝트 + 활동 + 학력 + 자격증
         ════════════════════════════════════════════ */}
-        <div className="page-break px-8 pt-5 pb-4">
+        <div className="page-break px-8 pt-4 pb-3">
 
           {/* Other Projects */}
-          <h2 className="text-[14px] font-extrabold text-gray-900 mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-5 bg-indigo-500 rounded-full inline-block" />
+          <h2 className="text-[13px] font-extrabold text-gray-900 mb-1.5 flex items-center gap-2">
+            <span className="w-1 h-4 bg-indigo-500 rounded-full inline-block" />
             기타 프로젝트
           </h2>
 
-          <div className="grid grid-cols-2 gap-2 mb-4">
+          <div className="grid grid-cols-2 gap-1.5 mb-3">
             {OTHER_PROJECTS.map((p) => (
-              <div key={p.title} className={`bg-gray-50 border border-gray-200 rounded-lg p-2.5 ${p.highlight ? 'border-l-[3px] border-l-indigo-400' : ''}`}>
-                <h3 className="text-[10px] font-bold text-gray-800 mb-0.5">{p.title}</h3>
-                <p className="text-[9px] text-gray-600 leading-snug">{p.desc}</p>
+              <div key={p.title} className={`bg-gray-50 border border-gray-200 rounded-lg p-2 ${p.highlight ? 'border-l-[3px] border-l-indigo-400' : ''}`}>
+                <h3 className="text-[9.5px] font-bold text-gray-800 mb-0.5">{p.title}</h3>
+                <p className="text-[8.5px] text-gray-600 leading-snug">{p.desc}</p>
               </div>
             ))}
           </div>
 
           {/* 활동 & 봉사 */}
-          <h2 className="text-[14px] font-extrabold text-gray-900 mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-5 bg-emerald-500 rounded-full inline-block" />
+          <h2 className="text-[13px] font-extrabold text-gray-900 mb-1.5 flex items-center gap-2">
+            <span className="w-1 h-4 bg-emerald-500 rounded-full inline-block" />
             활동 & 봉사
           </h2>
 
-          <div className="border border-gray-200 rounded-xl p-3 mb-4 space-y-2">
+          <div className="border border-gray-200 rounded-lg p-2.5 mb-3 space-y-1.5">
             {/* Mode Ensemble — 이미지 포함 */}
-            <div className="flex gap-3 items-start">
-              <div className="text-[9px] text-gray-400 w-[85px] shrink-0 pt-0.5">2024.11 – 현재</div>
+            <div className="flex gap-2.5 items-start">
+              <div className="text-[8.5px] text-gray-400 w-[80px] shrink-0 pt-0.5">2024.11 – 현재</div>
               <div className="flex-1">
-                <p className="font-bold text-[10.5px]">Mode Ensemble 창단 · 단장</p>
-                <p className="text-[9px] text-gray-600 leading-snug">
-                  20명 규모의 자원봉사 음악 단체를 직접 창단.
-                  단원 모집·연습 스케줄·예산·공연 기획까지 전 과정을 주도하며 3년+ 지속 운영 중.
-                  푸르메재단 넥슨어린이재활병원 등에서 정기 재능기부 공연
+                <p className="font-bold text-[10px]">Mode Ensemble 창단 · 단장</p>
+                <p className="text-[8.5px] text-gray-600 leading-snug">
+                  20명 규모의 자원봉사 음악 단체를 직접 창단. 단원 모집·연습 스케줄·예산·공연 기획까지 전 과정을 주도하며 3년+ 지속 운영. 푸르메재단 넥슨어린이재활병원 정기 재능기부 공연
                 </p>
               </div>
               <img
                 src={`${IMG_BASE}/music/mode-ensemble.jpg`}
                 alt="Mode Ensemble 단체사진"
                 referrerPolicy="no-referrer"
-                className="w-[100px] h-[66px] object-cover rounded-lg border border-gray-200 shrink-0"
+                className="w-[80px] h-[54px] object-cover rounded-lg border border-gray-200 shrink-0"
               />
             </div>
-            {/* 청각장애인 멘토링 */}
-            <div className="border-t border-gray-100 pt-2 flex gap-3 items-start">
-              <div className="text-[9px] text-gray-400 w-[85px] shrink-0 pt-0.5">2019.09 – 2019.12</div>
-              <div className="flex-1">
-                <p className="font-bold text-[10.5px]">청각장애인 학생 멘토링</p>
-                <p className="text-[9px] text-gray-600 leading-snug">
-                  서울애화학교 청각장애 학생 대상 재능기부 멘토링 활동
-                </p>
-              </div>
+            {/* 청각장애인 멘토링 + 오케스트라 — 한 줄씩 */}
+            <div className="border-t border-gray-100 pt-1.5 flex gap-2.5 items-baseline">
+              <div className="text-[8.5px] text-gray-400 w-[80px] shrink-0">2019.09 – 2019.12</div>
+              <p className="text-[9px]"><span className="font-bold text-gray-800">청각장애인 학생 멘토링</span> <span className="text-gray-500">— 서울애화학교 청각장애 학생 대상 재능기부</span></p>
             </div>
-            {/* 오케스트라 단장 */}
-            <div className="border-t border-gray-100 pt-2 flex gap-3 items-start">
-              <div className="text-[9px] text-gray-400 w-[85px] shrink-0 pt-0.5">2018.11 – 2019.11</div>
-              <div className="flex-1">
-                <p className="font-bold text-[10.5px]">대학 오케스트라 단장 · 재능기부</p>
-                <p className="text-[9px] text-gray-600 leading-snug">
-                  오케스트라 단장으로서 푸르메재단 넥슨어린이재활병원 재능기부 활동 기획·운영
-                </p>
-              </div>
+            <div className="border-t border-gray-100 pt-1.5 flex gap-2.5 items-baseline">
+              <div className="text-[8.5px] text-gray-400 w-[80px] shrink-0">2018.11 – 2019.11</div>
+              <p className="text-[9px]"><span className="font-bold text-gray-800">대학 오케스트라 단장 · 재능기부</span> <span className="text-gray-500">— 푸르메재단 넥슨어린이재활병원 활동 기획·운영</span></p>
             </div>
           </div>
 
-          {/* Education */}
-          <h2 className="text-[14px] font-extrabold text-gray-900 mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-5 bg-purple-500 rounded-full inline-block" />
-            학력
-          </h2>
-
-          <div className="border border-gray-200 rounded-xl p-3 mb-3 space-y-2">
-            <div className="flex gap-3 items-start">
-              <div className="text-[9px] text-gray-400 w-[85px] shrink-0 pt-0.5">2014.03 – 2021.02</div>
-              <div>
-                <p className="font-bold text-[10.5px]">한성대학교</p>
-                <p className="text-[9px] text-gray-600">정보시스템공학과 · 학점 3.01 / 4.5</p>
-              </div>
-            </div>
-            <div className="border-t border-gray-100 pt-2 flex gap-3 items-start">
-              <div className="text-[9px] text-gray-400 w-[85px] shrink-0 pt-0.5">2011.03 – 2014.02</div>
-              <div>
-                <p className="font-bold text-[10.5px]">부광고등학교</p>
-                <p className="text-[9px] text-gray-600">인천</p>
-              </div>
-            </div>
-          </div>
-
-          {/* 자격증 & 수상 */}
-          <h2 className="text-[14px] font-extrabold text-gray-900 mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-5 bg-amber-500 rounded-full inline-block" />
-            자격증 & 수상
-          </h2>
-
-          <div className="border border-gray-200 rounded-xl p-3 mb-3">
-            <div className="grid grid-cols-2 gap-x-6 gap-y-1.5">
-              {[
-                { date: '2018.10', title: '창업경진대회 우수상', org: '한성대학교' },
-                { date: '2018.09', title: '공학경진대회 동상', org: '한성대학교' },
-                { date: '2010.07', title: '워드프로세서 1급', org: '대한상공회의소' },
-                { date: '2010.12', title: '한자능력검정 2급', org: '한자교육진흥회' },
-              ].map((c) => (
-                <div key={c.title} className="flex gap-2 items-baseline">
-                  <span className="text-[8.5px] text-gray-400 w-[48px] shrink-0">{c.date}</span>
-                  <span className="text-[9.5px] font-semibold text-gray-800">{c.title}</span>
-                  <span className="text-[8.5px] text-gray-400">· {c.org}</span>
+          {/* 학력 + 자격증 & 수상 — 좌우 병합 */}
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            {/* 학력 */}
+            <div>
+              <h2 className="text-[13px] font-extrabold text-gray-900 mb-1.5 flex items-center gap-2">
+                <span className="w-1 h-4 bg-purple-500 rounded-full inline-block" />
+                학력
+              </h2>
+              <div className="border border-gray-200 rounded-lg p-2.5 space-y-1.5">
+                <div className="flex gap-2 items-start">
+                  <div className="text-[8.5px] text-gray-400 w-[75px] shrink-0 pt-0.5">2014.03 – 2021.02</div>
+                  <div>
+                    <p className="font-bold text-[10px]">한성대학교</p>
+                    <p className="text-[8.5px] text-gray-600">정보시스템공학과 · 학점 3.01 / 4.5</p>
+                  </div>
                 </div>
-              ))}
+                <div className="border-t border-gray-100 pt-1.5 flex gap-2 items-start">
+                  <div className="text-[8.5px] text-gray-400 w-[75px] shrink-0 pt-0.5">2011.03 – 2014.02</div>
+                  <div>
+                    <p className="font-bold text-[10px]">부광고등학교</p>
+                    <p className="text-[8.5px] text-gray-600">인천</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 자격증 & 수상 */}
+            <div>
+              <h2 className="text-[13px] font-extrabold text-gray-900 mb-1.5 flex items-center gap-2">
+                <span className="w-1 h-4 bg-amber-500 rounded-full inline-block" />
+                자격증 & 수상
+              </h2>
+              <div className="border border-gray-200 rounded-lg p-2.5 space-y-1">
+                {[
+                  { date: '2018.10', title: '창업경진대회 우수상', org: '한성대학교' },
+                  { date: '2018.09', title: '공학경진대회 동상', org: '한성대학교' },
+                  { date: '2010.07', title: '워드프로세서 1급', org: '대한상공회의소' },
+                  { date: '2010.12', title: '한자능력검정 2급', org: '한자교육진흥회' },
+                ].map((c) => (
+                  <div key={c.title} className="flex gap-1.5 items-baseline">
+                    <span className="text-[8px] text-gray-400 w-[42px] shrink-0">{c.date}</span>
+                    <span className="text-[9px] font-semibold text-gray-800">{c.title}</span>
+                    <span className="text-[8px] text-gray-400">· {c.org}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
           {/* Footer CTA */}
-          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-3 flex items-center justify-between">
             <div>
-              <p className="text-[11px] font-bold text-gray-900 mb-0.5">더 자세한 내용은 포트폴리오 사이트에서 확인하세요</p>
-              <p className="text-[9.5px] text-gray-500">
+              <p className="text-[10.5px] font-bold text-gray-900">더 자세한 내용은 포트폴리오 사이트에서 확인하세요</p>
+              <p className="text-[9px] text-gray-500 mt-0.5">
                 프로젝트별 상세 과정, 인터랙티브 기능, AI 챗봇 어시스턴트가 준비되어 있습니다.
               </p>
-              <p className="text-[9.5px] text-indigo-600 font-mono mt-0.5">{SITE_URL}</p>
+              <p className="text-[9px] text-indigo-600 font-mono mt-0.5">{SITE_URL}</p>
             </div>
             <div className="text-center shrink-0">
-              <img src={QR_URL} alt="Portfolio QR" className="w-[70px] h-[70px] rounded-lg border border-indigo-200" />
-              <p className="text-[7.5px] text-gray-400 mt-0.5">QR 스캔</p>
+              <img src={QR_URL} alt="Portfolio QR" className="w-[60px] h-[60px] rounded-lg border border-indigo-200" />
+              <p className="text-[7px] text-gray-400 mt-0.5">QR 스캔</p>
             </div>
           </div>
 
           {/* Page Number */}
-          <p className="text-[8px] text-gray-300 text-center pt-3">3 / 3</p>
+          <p className="text-[8px] text-gray-300 text-center pt-2">3 / 3</p>
         </div>
       </div>
     </>
