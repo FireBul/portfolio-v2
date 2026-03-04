@@ -120,13 +120,13 @@ export const PROJECTS = [
     ]
   },
   {
-    id: 'aurora-automation',
-    title: 'AURORA — AI 트레이딩 시스템 (Private)',
+    id: 'ai-trading-engine',
+    title: 'AI 트레이딩 엔진 (Private)',
     category: 'private',
     description: '92,000줄 Python 코드베이스의 24/7 자율 운영 퀀트 트레이딩 시스템입니다. XGBoost/LightGBM/CatBoost 기반 8개 ML 앙상블 모델, 172개 기술 지표, 5중 안전 게이트, Catalyst 24/7 모니터링 데몬으로 글로벌 파생상품 거래소에서 실시간 운영 중입니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/aurora-dashboard.png',
     tags: ['ML 앙상블', '자동화', 'Full-Stack'],
-    link: '/projects/aurora-automation',
+    link: '/projects/ai-trading-engine',
     metrics: [
       { label: 'ML 모델', value: '8개 앙상블' },
       { label: 'Sharpe', value: '5.05' },

@@ -35,7 +35,7 @@ const FEATURED_PROJECTS = [
     stack: ['A/B Testing', 'Google Analytics', 'MySQL', 'Figma'],
   },
   {
-    title: 'AURORA — 퀀트 트레이딩 시스템',
+    title: 'AI 트레이딩 엔진 — 퀀트 트레이딩 시스템',
     role: 'Full-Stack 설계 · ML · 운영',
     org: '개인 프로젝트',
     image: `${IMG_BASE}/projects/aurora-file-tree.svg`,
@@ -258,7 +258,7 @@ export function PortfolioPDF() {
                 </div>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                   {[
-                    'AURORA — 92,000줄, 8개 ML 앙상블, 24/7 자율 운영 퀀트 트레이딩 시스템',
+                    'AI 트레이딩 엔진 — 92,000줄, 8개 ML 앙상블, 24/7 자율 운영 퀀트 트레이딩 시스템',
                     'Teflon — YOLOv8 5종 결함 검출, 멀티카메라, 산업 프로토콜 연동 검사 시스템',
                   ].map((item, i) => (
                     <p key={i} className="text-[9px] text-gray-700 font-medium leading-snug flex gap-1">

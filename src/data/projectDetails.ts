@@ -121,7 +121,7 @@ export const PROJECT_DETAILS: Record<string, any> = {
       ]
     }
   },
-  'aurora-automation': {
+  'ai-trading-engine': {
     subtitle: '92,000줄 Python 코드베이스 · 8개 ML 모델 앙상블 · 5중 안전 게이트로 24/7 자율 운영되는 퀀트 트레이딩 시스템',
     overview: {
       background: '글로벌 파생상품 시장을 대상으로 24시간 자율 운영되는 알고리즘 트레이딩 시스템입니다. 단순 백테스트 수준이 아니라, ML 모델 학습 → 백테스트 검증 → 실시간 시그널 생성 → 주문 실행 → 리스크 관리까지 전체 파이프라인을 직접 설계하고 운영하고 있습니다. 503회 이상의 커밋과 140개 파일, 92,000줄의 코드로 구성된 프로덕션 시스템입니다.',

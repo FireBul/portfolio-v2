@@ -5,7 +5,7 @@ export const knowledgeBase = [
   },
   {
     keywords: ['project', '프로젝트', '포트폴리오', 'portfolio', '작업'],
-    response: "인터파크 커머스 프로젝트 8개(광고 개선, 쿠폰 자동화, CPS 도입 등)와 개인 프로젝트 2개(AURORA AI 트레이딩, Teflon AI 검사)가 있습니다. Projects 페이지에서 확인하세요."
+    response: "인터파크 커머스 프로젝트 8개(광고 개선, 쿠폰 자동화, CPS 도입 등)와 개인 프로젝트 2개(AI 트레이딩 엔진, Teflon AI 검사)가 있습니다. Projects 페이지에서 확인하세요."
   },
   {
     keywords: ['ads', '광고', '지면'],
@@ -16,8 +16,8 @@ export const knowledgeBase = [
     response: "'최저가 쿠폰 자동화 시스템' — 네이버 EP API + Kafka 활용, 월 50억원 거래액, YoY 30% 성장, 수익성 20% 개선을 달성했습니다."
   },
   {
-    keywords: ['aurora', '오로라', '트레이딩', 'trading', 'quant', '퀀트'],
-    response: "AURORA는 92,000줄 Python 기반 24/7 자율 운영 퀀트 트레이딩 시스템입니다. 8개 ML 앙상블 모델, Sharpe 5.05, Win Rate 65.2%, 5중 안전 게이트, Catalyst 모니터링 데몬으로 실시간 운영 중입니다."
+    keywords: ['트레이딩', 'trading', 'quant', '퀀트', 'ml', '엔진'],
+    response: "AI 트레이딩 엔진은 92,000줄 Python 기반 24/7 자율 운영 퀀트 트레이딩 시스템입니다. 8개 ML 앙상블 모델, Sharpe 5.05, Win Rate 65.2%, 5중 안전 게이트, Catalyst 모니터링 데몬으로 실시간 운영 중입니다."
   },
   {
     keywords: ['teflon', '테플론', '검사', 'inspection', 'yolo', 'vision'],

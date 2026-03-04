@@ -79,7 +79,7 @@ export function About() {
           </div>
           <div className="space-y-8">
             {[
-              { title: 'AURORA (ML 운영/자동화)', desc: '모델 실험부터 운영 검증까지 연결되는 파이프라인을 구축·운영했습니다. 핵심은 실험 속도보다 안정성 게이트를 지키는 운영 체계입니다.' },
+              { title: 'AI 트레이딩 엔진 (ML 운영/자동화)', desc: '모델 실험부터 운영 검증까지 연결되는 파이프라인을 구축·운영했습니다. 핵심은 실험 속도보다 안정성 게이트를 지키는 운영 체계입니다.' },
               { title: 'Teflon Inspection Automation', desc: '비전 모델 기반 검사 자동화 프로젝트로, 현장 배포 관점(카메라/운영 UI/업그레이드)까지 고려해 시스템을 고도화했습니다.' },
               { title: 'Universal Architecture Lab', desc: '대규모 아이디어/아티팩트 생성·분류·우선순위화 실험을 통해, 의사결정에 바로 쓰일 수 있는 구조화 방법을 검증했습니다.' }
             ].map((proj) => (
