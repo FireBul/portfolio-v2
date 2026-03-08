@@ -54,10 +54,10 @@ export const PROJECT_DETAILS: Record<string, any> = {
       { title: '실시간 처리', desc: '대용량 데이터의 실시간 분석 및 처리' },
       { title: '채널별 정책', desc: '각 가격 비교 채널의 상이한 정책 대응' }
     ],
-    solutionGoal: '소카테고리별 상품 등급 세팅과 쿠폰 마진율 조정을 통해 YoY 월평균 20% 개선을 달성했습니다. 또한 Kafka 신규 topic 생성을 통한 데이터 수집 구조 변경으로 YoY 월평균 거래액 30% 증가를 이뤄냈습니다.',
+    solutionGoal: '소카테고리별 상품 등급 세팅과 쿠폰 마진율 조정을 통해 수익성 YoY 20% 개선을 달성했으며, 네이버 EP API 기반 실시간 자동화 시스템으로 월 50억원 거래액과 YoY 30% 성장을 이뤄냈습니다.',
     process: [
       { step: 1, title: '데이터 수집', desc: '네이버 EP API, 가격 비교 채널' },
-      { step: 2, title: '데이터 처리', desc: '정규화 및 검증, Kafka 연동' },
+      { step: 2, title: '데이터 처리', desc: 'EP 데이터 정규화, 가격 비교 채널 데이터 검증 및 정합성 확보' },
       { step: 3, title: '분석 엔진', desc: '가격 비교 분석, 수익성 계산' },
       { step: 4, title: '쿠폰 생성', desc: '자동 할인율 계산, 채널별 최적화' },
       { step: 5, title: '배포', desc: '다중 채널 발행, 실시간 모니터링' }
@@ -72,9 +72,9 @@ export const PROJECT_DETAILS: Record<string, any> = {
         { value: '자동화', label: '업무 효율' }
       ]
     },
-    techStack: ['네이버 EP API', 'Python', 'MySQL', 'Kafka', 'Excel', 'Tableau', 'Power BI', 'GA4', 'JIRA', 'Confluence', 'Slack'],
+    techStack: ['네이버 EP API', 'Python', 'MySQL', 'Excel', 'Tableau', 'Power BI', 'GA4', 'JIRA', 'Confluence', 'Slack'],
     learnings: {
-      highlight: '네이버 EP API와 Kafka를 활용한 자동화 시스템 구축을 통해 월 50억원 규모의 거래액을 효율적으로 관리할 수 있었습니다. 데이터 기반 의사결정이 비즈니스에 미치는 강력한 임팩트를 실감했습니다.',
+      highlight: '네이버 EP API를 활용한 자동화 시스템 구축을 통해 월 50억원 규모의 거래액을 효율적으로 관리할 수 있었습니다. 데이터 기반 의사결정이 비즈니스에 미치는 강력한 임팩트를 실감했습니다.',
       points: [
         '자동화의 중요성: 반복적인 업무의 자동화를 통한 효율성 극대화',
         '데이터 품질 관리: 정확한 데이터가 전체 시스템의 성공 요인',

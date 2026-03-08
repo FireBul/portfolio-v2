@@ -13,13 +13,13 @@ const FEATURED_PROJECTS = [
     role: 'PM · 기획 · 데이터 분석',
     org: '인터파크 SRM팀',
     image: `${IMG_BASE}/projects/coupon-flow.png`,
-    desc: '수동 쿠폰 운영의 비효율을 제거하기 위해, 3개 가격 비교 채널(네이버·에누리·다나와)의 실시간 가격 데이터를 Kafka 파이프라인으로 연결. 네이버 EP API 기반 자동화 쿠폰 시스템을 설계하여 월 50억원 규모의 거래를 데이터 기반으로 운영',
+    desc: '수동 쿠폰 운영의 비효율을 제거하기 위해, 3개 가격 비교 채널(네이버·에누리·다나와)의 실시간 가격 데이터를 네이버 EP API로 연결. 소카테고리별 등급 세팅과 마진율 자동 조정으로 월 50억원 규모의 거래를 데이터 기반으로 운영',
     metrics: [
       { value: '50억원', label: '월 거래액' },
       { value: '+30%', label: 'YoY 거래액' },
       { value: '+20%', label: '수익성 개선' },
     ],
-    stack: ['네이버 EP API', 'Kafka', 'Python', 'MySQL', 'Tableau'],
+    stack: ['네이버 EP API', 'Python', 'MySQL', 'Tableau', 'GA4'],
   },
   {
     title: '상품 최종 지면 광고 개선',

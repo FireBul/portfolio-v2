@@ -97,7 +97,7 @@ const STORAGE_KEY = 'wh_ad_engine';
 function createDefaultCampaigns(): Campaign[] {
   return [
     { id: 'c1', name: '광고 지면 개선 프로젝트 홍보', type: 'display', keywords: ['광고', 'A/B', 'CTR', '지면'], bidCPC: 150, dailyBudget: 5000, spent: 0, projectId: 'ads-result', active: true, qualityScore: 8.5, impressions: 0, clicks: 0, conversions: 0, createdAt: Date.now() },
-    { id: 'c2', name: '쿠폰 자동화 검색 광고', type: 'search', keywords: ['쿠폰', '자동화', '네이버', 'EP', 'Kafka'], bidCPC: 200, dailyBudget: 4000, spent: 0, projectId: 'coupon-flow', active: true, qualityScore: 7.5, impressions: 0, clicks: 0, conversions: 0, createdAt: Date.now() },
+    { id: 'c2', name: '쿠폰 자동화 검색 광고', type: 'search', keywords: ['쿠폰', '자동화', '네이버', 'EP', '최저가'], bidCPC: 200, dailyBudget: 4000, spent: 0, projectId: 'coupon-flow', active: true, qualityScore: 7.5, impressions: 0, clicks: 0, conversions: 0, createdAt: Date.now() },
     { id: 'c3', name: '바이럴 CPS 리워드 광고', type: 'reward', keywords: ['CPS', '바이럴', '제휴', '정산'], bidCPC: 300, dailyBudget: 3000, spent: 0, projectId: 'viral-ads', active: true, qualityScore: 7.0, impressions: 0, clicks: 0, conversions: 0, createdAt: Date.now() },
     { id: 'c4', name: 'CRM 개인화 배너', type: 'display', keywords: ['CRM', 'Braze', '개인화', '푸시'], bidCPC: 120, dailyBudget: 3500, spent: 0, projectId: 'crm-campaign', active: true, qualityScore: 8.0, impressions: 0, clicks: 0, conversions: 0, createdAt: Date.now() },
     { id: 'c5', name: '광고센터 ADMIN 검색 광고', type: 'search', keywords: ['ADMIN', '운영', 'RTB', '과금', '정책'], bidCPC: 180, dailyBudget: 3000, spent: 0, projectId: 'seller-admin', active: true, qualityScore: 7.0, impressions: 0, clicks: 0, conversions: 0, createdAt: Date.now() },
