@@ -105,6 +105,19 @@ export function AdPlatformDemo() {
   const [pipelineComplete, setPipelineComplete] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
+  // 페이지 로드 시 adMode가 ON이면 파이프라인 자동 복원
+  useEffect(() => {
+    if (adMode && !pipelineComplete && !showPipeline) {
+      initEngine();
+      const consent = restoreConsent();
+      if (consent !== 'none') {
+        startPipeline();
+      } else {
+        setPipelineComplete(true);
+      }
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   // 광고 모드 토글 처리
   const handleToggle = useCallback(() => {
     if (!adMode) {
@@ -186,14 +199,15 @@ export function AdPlatformDemo() {
       <AnimatePresence>
         {adMode && pipelineComplete && !showDashboard && !showPipeline && (
           <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
             onClick={() => setShowDashboard(true)}
-            className="fixed bottom-24 right-4 z-50 flex items-center gap-2 px-3 py-2 rounded-full bg-amber-500/20 border border-amber-500/30 backdrop-blur-sm text-amber-400 text-xs font-mono hover:bg-amber-500/30 transition-colors cursor-pointer"
+            className="fixed bottom-6 right-16 z-50 flex items-center gap-2.5 px-5 py-3 rounded-2xl bg-gradient-to-r from-amber-500/20 to-orange-500/15 border border-amber-500/30 backdrop-blur-md text-amber-400 text-sm font-mono font-bold hover:from-amber-500/30 hover:to-orange-500/25 transition-all cursor-pointer shadow-[0_0_30px_rgba(245,158,11,0.1)]"
           >
-            <Zap className="w-3.5 h-3.5" />
+            <Zap className="w-5 h-5" />
             AD LAB
+            <span className="text-[10px] text-amber-400/50 font-normal">Open Dashboard</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -216,23 +230,31 @@ export function AdPlatformDemo() {
   );
 }
 
-// ── Toggle Button ──
+// ── Toggle Button (fixed right side, vertically centered) ──
 
 function AdToggleButton({ adMode, onToggle }: { adMode: boolean; onToggle: () => void }) {
   return (
     <motion.button
       onClick={onToggle}
-      className="fixed top-3 right-4 z-[60] flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-sm hover:bg-black/80 transition-colors cursor-pointer"
+      className={`fixed right-0 top-1/2 -translate-y-1/2 z-[60] flex flex-col items-center gap-1.5 px-2 py-3 rounded-l-xl border border-r-0 backdrop-blur-md cursor-pointer transition-all ${
+        adMode
+          ? 'bg-amber-500/20 border-amber-500/40 hover:bg-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.15)]'
+          : 'bg-black/70 border-white/10 hover:bg-black/90'
+      }`}
       whileTap={{ scale: 0.95 }}
+      whileHover={{ x: -2 }}
     >
-      <div className={`w-8 h-4 rounded-full transition-colors relative ${adMode ? 'bg-amber-500' : 'bg-white/20'}`}>
+      <Zap className={`w-4 h-4 ${adMode ? 'text-amber-400' : 'text-white/30'}`} />
+      <div className={`w-5 h-10 rounded-full transition-colors relative ${adMode ? 'bg-amber-500' : 'bg-white/20'}`}>
         <motion.div
-          className="absolute top-0.5 left-0.5 w-3 h-3 rounded-full bg-white"
-          animate={{ x: adMode ? 16 : 0 }}
+          className="absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white shadow-sm"
+          animate={{ y: adMode ? 20 : 0 }}
           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         />
       </div>
-      <span className={`text-[10px] font-mono tracking-wider ${adMode ? 'text-amber-400' : 'text-white/40'}`}>
+      <span className={`text-[9px] font-mono font-bold tracking-wider writing-vertical ${adMode ? 'text-amber-400' : 'text-white/30'}`}
+        style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
+      >
         AD {adMode ? 'ON' : 'OFF'}
       </span>
     </motion.button>
