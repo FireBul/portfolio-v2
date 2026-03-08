@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Search } from 'lucide-react';
 import { PROJECTS } from '../constants';
+import { useAdMode } from '../components/AdPlatformDemo';
+import { SearchAds } from '../components/ads/SearchAds';
 
 const CATEGORIES = [
   { id: 'all', label: '전체' },
@@ -31,6 +34,8 @@ const item = {
 
 export function Projects() {
   const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { adMode } = useAdMode();
 
   const filteredProjects = PROJECTS.filter(
     project => activeCategory === 'all' || project.category === activeCategory
@@ -67,6 +72,22 @@ export function Projects() {
           </button>
         ))}
       </motion.div>
+
+      {/* Search Bar + Sponsored (광고 모드 ON 시에만) */}
+      {adMode && (
+        <motion.div variants={item} className="mb-8">
+          <div className="relative mb-3">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+            <input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="프로젝트 검색 (예: 광고, Kafka, CRM...)"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/5 border border-white/10 text-sm text-white/80 placeholder:text-white/25 outline-none focus:border-amber-500/30 transition-colors"
+            />
+          </div>
+          {searchQuery && <SearchAds query={searchQuery} />}
+        </motion.div>
+      )}
 
       <motion.div layout className="grid md:grid-cols-2 gap-8 md:gap-12">
         <AnimatePresence mode="popLayout">

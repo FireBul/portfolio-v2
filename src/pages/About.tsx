@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Megaphone, Search, Gift } from 'lucide-react';
 import { CORE_COMPETENCIES } from '../constants';
 
 const container = {
@@ -68,6 +69,29 @@ export function About() {
           </div>
         </motion.div>
       </div>
+
+      {/* 광고 PM 역량 */}
+      <motion.div variants={item} className="py-24 border-t border-white/10">
+        <h2 className="text-3xl font-bold tracking-tight mb-6">광고 PM 역량</h2>
+        <p className="text-zinc-400 leading-relaxed mb-8 max-w-2xl">
+          디스플레이·검색·리워드 광고 상품의 기획·구현 경험과 DSP/SSP/MMP 플랫폼 활용 및 연동 경험을 보유하고 있습니다.
+        </p>
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { icon: <Megaphone className="w-6 h-6" />, title: '디스플레이 & DSP', desc: 'A/B 테스트 기반 지면 최적화, RTB Second-Price + Quality Score 과금, 판매자 광고센터 ADMIN 총괄 기획' },
+            { icon: <Search className="w-6 h-6" />, title: '검색 & SSP 연동', desc: 'Kafka 기반 광고 데이터 파이프라인, 외부 매체(SSP) 연동, ROAS/CTR 정밀 측정 체계 구축' },
+            { icon: <Gift className="w-6 h-6" />, title: '리워드 & CRM', desc: 'CPS 리워드 모델 0→1 기획, Braze×GA4 개인화 광고, MMP 어트리뷰션, CPC 과금 시나리오' },
+          ].map((card) => (
+            <div key={card.title} className="p-6 rounded-2xl glass-panel border border-white/5 hover:border-emerald-500/20 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4 text-emerald-400">
+                {card.icon}
+              </div>
+              <h3 className="text-lg font-bold mb-2 text-white">{card.title}</h3>
+              <p className="text-sm text-zinc-400 leading-relaxed">{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </motion.div>
 
       <motion.div variants={item} className="py-24 border-t border-white/10">
         <div className="grid md:grid-cols-2 gap-12">

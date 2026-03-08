@@ -14,6 +14,7 @@ import { AnalyticsGimmick } from './components/AnalyticsGimmick';
 import { MouseHeatmap } from './components/MouseHeatmap';
 import { BehavioralPersona } from './components/BehavioralPersona';
 import { ABTestReveal } from './components/ABTestReveal';
+import { AdPlatformDemo, AdModeProvider } from './components/AdPlatformDemo';
 import { trackPageView, initScrollTracking } from './utils/analytics';
 
 function RouteTracker() {
@@ -37,6 +38,7 @@ function OverlayWidgets() {
       <MouseHeatmap />
       <BehavioralPersona />
       <ABTestReveal />
+      <AdPlatformDemo />
       <Chatbot />
     </>
   );
@@ -49,6 +51,7 @@ function App() {
   }, []);
 
   return (
+    <AdModeProvider>
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <RouteTracker />
       <OverlayWidgets />
@@ -66,6 +69,7 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
+    </AdModeProvider>
   );
 }
 

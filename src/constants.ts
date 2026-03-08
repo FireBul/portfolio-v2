@@ -13,7 +13,7 @@ export const PROJECTS = [
     category: 'advertising',
     description: '상품 최종 지면에 새로운 광고 영역을 추가하는 프로젝트를 진행했습니다. A/B 테스트를 통해 사용자 경험을 해치지 않으면서도 광고액 80% 상승과 CTR 100% 상승을 달성했습니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/ads-result.png',
-    tags: ['PM', 'A/B 테스트', 'UX 개선'],
+    tags: ['PM', 'A/B 테스트', 'UX 개선', '디스플레이 광고'],
     link: '/projects/ads-result',
     metrics: [
       { label: '광고액', value: '80% ↑' },
@@ -41,7 +41,7 @@ export const PROJECTS = [
     category: 'data',
     description: '11시11분, 커넥트온, 쿠차, 와이즈버즈 등 제휴사의 바이럴 광고에 CPS(Cost Per Sale) 모델을 새롭게 도입하여 수익 모델을 다변화했습니다. 백어드민 시스템 설계부터 정산 프로세스 표준화까지 전체 비즈니스 프로세스를 재설계했습니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/viral-ads-system.png',
-    tags: ['PM', '비즈니스 모델', '백어드민'],
+    tags: ['CPS 리워드 광고', '0→1 기획', '정산 자동화'],
     link: '/projects/viral-ads',
     metrics: [
       { label: '혁신', value: 'CPS 모델' },
@@ -55,7 +55,7 @@ export const PROJECTS = [
     category: 'crm',
     description: 'Braze와 GA를 연동하여 개인화 푸시 광고 및 배너 광고를 기획하고 운영했습니다. 사용자 행동 데이터를 분석하여 맞춤형 광고 시나리오를 설계하고 CPC 시나리오를 통해 광고 효율을 개선했습니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/crm-campaign.jpg',
-    tags: ['CRM', '개인화', 'PM'],
+    tags: ['Braze/MMP', '개인화 광고', 'CPC 과금'],
     link: '/projects/crm-campaign',
     metrics: [
       { label: '도구', value: 'Braze, GA' },
@@ -69,7 +69,7 @@ export const PROJECTS = [
     category: 'advertising',
     description: '넥스트페이퍼, 노티플러스 등 신규 외부 채널을 추가하는 프로젝트를 담당했습니다. 각 채널의 특성을 분석하고 최적의 연동 방안을 설계하여 광고 채널 다변화를 통한 수익 확대를 달성했습니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/external-channel.png',
-    tags: ['PM', '채널 관리'],
+    tags: ['SSP 매체 연동', '광고 태그', 'PM'],
     link: '/projects/external-channel',
     metrics: [
       { label: '신규 채널', value: '2개' },
@@ -83,7 +83,7 @@ export const PROJECTS = [
     category: 'policy',
     description: '판매자 광고 센터의 운영 체계를 총괄 기획하며 서비스 안정성과 수익성을 동시에 확보했습니다. 소프트웨어 등 고위험 광고에 대한 품질 관리 프로세스를 설계하고 RTB 과금 최적화 및 채널별 광고액 관리 정책 등 핵심 비즈니스 정책을 수립했습니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/seller-admin.png',
-    tags: ['ADMIN', '정책 수립', 'PM'],
+    tags: ['DSP/RTB', '광고 품질 관리', '과금 정책'],
     link: '/projects/seller-admin',
     metrics: [
       { label: '총괄기획', value: 'ADMIN 운영' },
@@ -97,7 +97,7 @@ export const PROJECTS = [
     category: 'data',
     description: '기존 데이터 수집 구조의 한계를 개선하기 위해 Kafka 신규 topic을 생성하고 수집 구조를 변경했습니다. 이를 통해 YoY 월평균 거래액 30% 증가를 달성했으며, 더욱 안정적이고 확장 가능한 데이터 인프라를 구축했습니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/data-structure.png',
-    tags: ['Kafka', '데이터 파이프라인', 'PM'],
+    tags: ['광고 데이터 파이프라인', 'Kafka', 'ROAS 측정'],
     link: '/projects/data-structure',
     metrics: [
       { label: 'YoY 성장', value: '30%' },
@@ -111,7 +111,7 @@ export const PROJECTS = [
     category: 'policy',
     description: '기존 쿠폰 정산 방식의 문제점을 해결하기 위해 정산 로직을 개선했습니다. 할인 전 판매가액 기준으로 수수료를 부과하는 방식으로 변경하여 판매자와 플랫폼 모두에게 공정한 정산 구조를 구축했습니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/settlement-logic.png',
-    tags: ['정산 정책', 'PM'],
+    tags: ['광고 정산', '수수료 모델', '라이프사이클 리드'],
     link: '/projects/settlement-logic',
     metrics: [
       { label: '정산 방식', value: '개선' },

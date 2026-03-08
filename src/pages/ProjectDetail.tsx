@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, CheckCircle2, Target, Lightbulb, Wrench } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Target, Lightbulb, Wrench, Lock, Unlock, Play } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { PROJECT_DETAILS } from '../data/projectDetails';
+import { useAdMode } from '../components/AdPlatformDemo';
+import { runAuction, trackAdEvent } from '../data/adEngine';
+import { getSdkState, type UserSegment } from '../data/adSdk';
 
 const container = {
   hidden: { opacity: 0 },
@@ -212,37 +215,10 @@ export function ProjectDetail() {
 
           {/* Learnings */}
           {details.learnings && (
-            <motion.section variants={item}>
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
-                <Lightbulb className="text-emerald-400" /> 배운 점 (Key Learnings)
-              </h2>
-              <div className="glass-panel p-8 rounded-3xl border border-white/5 space-y-8">
-                <div className="p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-                  <h4 className="text-emerald-400 font-bold mb-3 flex items-center gap-2">
-                    <Lightbulb className="w-5 h-5" /> 핵심 인사이트
-                  </h4>
-                  <p className="text-emerald-100/80 leading-relaxed">{details.learnings.highlight}</p>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-4">세부 인사이트</h3>
-                  <ul className="space-y-3">
-                    {details.learnings.points.map((point: string, i: number) => {
-                      const [title, desc] = point.split(': ');
-                      return (
-                        <li key={i} className="flex items-start gap-3 text-zinc-400">
-                          <span className="text-emerald-400 mt-1">•</span>
-                          <span>
-                            <strong className="text-zinc-200">{title}:</strong> {desc || ''}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </motion.section>
+            <LearningsSection details={details} />
           )}
+                
+          {/* (LearningsSection handles the rest) */}
         </div>
       ) : (
         <motion.div variants={item} className="glass-panel p-12 rounded-3xl border border-white/5 text-center">
@@ -279,5 +255,95 @@ export function ProjectDetail() {
         ) : <div />}
       </motion.nav>
     </motion.div>
+  );
+}
+
+function LearningsSection({ details }: { details: any }) {
+  const { adMode } = useAdMode();
+  const [unlocked, setUnlocked] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+  const [watching, setWatching] = useState(false);
+
+  const startRewardAd = useCallback(() => {
+    setWatching(true);
+    setCountdown(5);
+
+    const sdk = getSdkState();
+    const segment: UserSegment = sdk.userProfile?.segment || 'casual';
+    const auction = runAuction('reward_interstitial', 'reward', undefined, segment);
+    if (auction.winnerId) {
+      trackAdEvent('impression', auction.winnerId, 'reward_interstitial');
+    }
+
+    let t = 5;
+    const timer = setInterval(() => {
+      t--;
+      setCountdown(t);
+      if (t <= 0) {
+        clearInterval(timer);
+        setWatching(false);
+        setUnlocked(true);
+        if (auction.winnerId) {
+          trackAdEvent('click', auction.winnerId, 'reward_interstitial');
+          trackAdEvent('conversion', auction.winnerId, 'reward_interstitial');
+        }
+      }
+    }, 1000);
+  }, []);
+
+  const showBlur = adMode && !unlocked;
+
+  return (
+    <motion.section variants={item}>
+      <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
+        <Lightbulb className="text-emerald-400" /> 배운 점 (Key Learnings)
+      </h2>
+      <div className="glass-panel p-8 rounded-3xl border border-white/5 space-y-8">
+        <div className={`relative p-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 ${showBlur ? 'overflow-hidden' : ''}`}>
+          {showBlur && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/60 backdrop-blur-md rounded-2xl">
+              {watching ? (
+                <div className="text-center">
+                  <div className="w-12 h-12 rounded-full border-2 border-amber-500 flex items-center justify-center mb-2 mx-auto">
+                    <span className="text-xl font-mono font-bold text-amber-400">{countdown}</span>
+                  </div>
+                  <p className="text-xs text-white/50">리워드 광고 시청 중...</p>
+                </div>
+              ) : (
+                <button onClick={startRewardAd} className="flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-400 text-xs font-mono hover:bg-amber-500/30 transition-colors cursor-pointer">
+                  <Play className="w-3.5 h-3.5" />
+                  광고 시청 후 잠금해제
+                </button>
+              )}
+              <div className="absolute top-2 right-2 flex items-center gap-1 text-[10px] text-white/25 font-mono">
+                <Lock className="w-3 h-3" /> Reward Ad
+              </div>
+            </div>
+          )}
+          <h4 className="text-emerald-400 font-bold mb-3 flex items-center gap-2">
+            <Lightbulb className="w-5 h-5" /> 핵심 인사이트
+            {adMode && unlocked && <Unlock className="w-3.5 h-3.5 text-amber-400 ml-1" />}
+          </h4>
+          <p className="text-emerald-100/80 leading-relaxed">{details.learnings.highlight}</p>
+        </div>
+
+        <div>
+          <h3 className="text-lg font-bold text-white mb-4">세부 인사이트</h3>
+          <ul className="space-y-3">
+            {details.learnings.points.map((point: string, i: number) => {
+              const [title, desc] = point.split(': ');
+              return (
+                <li key={i} className="flex items-start gap-3 text-zinc-400">
+                  <span className="text-emerald-400 mt-1">•</span>
+                  <span>
+                    <strong className="text-zinc-200">{title}:</strong> {desc || ''}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </motion.section>
   );
 }

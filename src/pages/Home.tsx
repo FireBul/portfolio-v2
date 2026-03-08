@@ -5,6 +5,8 @@ import { ArrowRight, ChevronRight, BarChart3, Target, Zap } from 'lucide-react';
 import { KEY_METRICS, PROJECTS } from '../constants';
 import { getOrAssignGroup, VARIANTS } from '../components/ABTestReveal';
 import { trackABEvent, trackVisitor } from '../utils/supabase';
+import { useAdMode } from '../components/AdPlatformDemo';
+import { DisplayBanner } from '../components/ads/DisplayBanner';
 
 const container = {
   hidden: { opacity: 0 },
@@ -82,6 +84,9 @@ export function Home() {
           />
         </motion.div>
       </section>
+
+      {/* Display Banner Ad (광고 모드 ON 시에만) */}
+      <AdBannerSlot />
 
       {/* Metrics Section */}
       <section className="py-20 border-t border-white/10">
@@ -176,4 +181,10 @@ export function Home() {
       </section>
     </motion.div>
   );
+}
+
+function AdBannerSlot() {
+  const { adMode } = useAdMode();
+  if (!adMode) return null;
+  return <DisplayBanner />;
 }

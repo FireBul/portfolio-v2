@@ -42,6 +42,22 @@ export const knowledgeBase = [
   {
     keywords: ['about', '소개', '누구', 'who', '원혁'],
     response: "최원혁 — 인터파크 커머스 PM 3.5년+. 데이터 기반 의사결정, A/B 테스트, 자동화 파이프라인, 그로스 전략이 핵심 역량입니다. About 페이지에서 확인하세요."
+  },
+  {
+    keywords: ['dsp', 'ssp', 'mmp', 'rtb', '경매', '비딩'],
+    response: "AD LAB에서 DSP(광고주), SSP(매체), MMP(측정), RTB(경매) 시뮬레이션을 체험할 수 있습니다. 우측 상단 AD 토글을 켜면 미니 광고 플랫폼이 활성화됩니다."
+  },
+  {
+    keywords: ['cps', 'cpc', 'cpm', '과금', '수수료', '정산'],
+    response: "인터파크에서 CPS(바이럴 리워드), CPC(CRM 개인화), RTB Second-Price 등 다양한 과금 모델을 기획·운영했습니다. Projects 페이지에서 상세 내용을 확인하세요."
+  },
+  {
+    keywords: ['디스플레이', '검색', '배너', '리워드', '광고 상품'],
+    response: "디스플레이(Home 배너), 검색(스폰서드 결과), 리워드(인사이트 잠금해제) 3종 광고를 AD LAB에서 직접 체험할 수 있습니다. 우측 상단 AD ON으로 활성화하세요."
+  },
+  {
+    keywords: ['ad lab', 'sdk', '광고 플랫폼', '광고 모드', '쿠키'],
+    response: "AD LAB은 포트폴리오 내 미니 광고 생태계입니다. 쿠키 동의 → SDK 파이프라인 → 사용자 프로파일링 → RTB 비딩 → 광고 송출 → 성과 측정 전체 플로우를 시뮬레이션합니다."
   }
 ];
 
