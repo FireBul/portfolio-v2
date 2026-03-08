@@ -239,20 +239,20 @@ function AdToggleButton({ adMode, onToggle }: { adMode: boolean; onToggle: () =>
       className={`fixed right-0 top-1/2 -translate-y-1/2 z-[60] flex flex-col items-center gap-1.5 px-2 py-3 rounded-l-xl border border-r-0 backdrop-blur-md cursor-pointer transition-all ${
         adMode
           ? 'bg-amber-500/20 border-amber-500/40 hover:bg-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.15)]'
-          : 'bg-black/70 border-white/10 hover:bg-black/90'
+          : 'bg-zinc-800/90 border-white/20 hover:bg-zinc-700/90 hover:border-white/40 shadow-[0_0_15px_rgba(255,255,255,0.05)]'
       }`}
       whileTap={{ scale: 0.95 }}
       whileHover={{ x: -2 }}
     >
-      <Zap className={`w-4 h-4 ${adMode ? 'text-amber-400' : 'text-white/30'}`} />
-      <div className={`w-5 h-10 rounded-full transition-colors relative ${adMode ? 'bg-amber-500' : 'bg-white/20'}`}>
+      <Zap className={`w-4 h-4 ${adMode ? 'text-amber-400' : 'text-white/60'}`} />
+      <div className={`w-5 h-10 rounded-full transition-colors relative ${adMode ? 'bg-amber-500' : 'bg-white/30 border border-white/20'}`}>
         <motion.div
           className="absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white shadow-sm"
           animate={{ y: adMode ? 20 : 0 }}
           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
         />
       </div>
-      <span className={`text-[9px] font-mono font-bold tracking-wider writing-vertical ${adMode ? 'text-amber-400' : 'text-white/30'}`}
+      <span className={`text-[9px] font-mono font-bold tracking-wider writing-vertical ${adMode ? 'text-amber-400' : 'text-white/60'}`}
         style={{ writingMode: 'vertical-rl', textOrientation: 'mixed' }}
       >
         AD {adMode ? 'ON' : 'OFF'}

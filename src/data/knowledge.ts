@@ -13,7 +13,7 @@ export const knowledgeBase = [
   },
   {
     keywords: ['coupon', '쿠폰', '최저가'],
-    response: "'최저가 쿠폰 자동화 시스템' — 네이버 EP API + Kafka 활용, 월 50억원 거래액, YoY 30% 성장, 수익성 20% 개선을 달성했습니다."
+    response: "'최저가 쿠폰 자동화 시스템' — 네이버 EP API 활용, 월 50억원 거래액, YoY 30% 성장, 수익성 20% 개선을 달성했습니다."
   },
   {
     keywords: ['트레이딩', 'trading', 'quant', '퀀트', 'ml', '엔진'],
