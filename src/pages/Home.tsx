@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback, useEffect } from 'react';
+import React, { useMemo, useCallback, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronRight, BarChart3, Target, Zap } from 'lucide-react';
@@ -7,6 +7,8 @@ import { getOrAssignGroup, VARIANTS } from '../components/ABTestReveal';
 import { trackABEvent, trackVisitor } from '../utils/supabase';
 import { useAdMode } from '../components/AdPlatformDemo';
 import { DisplayBanner } from '../components/ads/DisplayBanner';
+import { suggestNextProject } from '../utils/geminiInsights';
+import { triggerMessage } from '../components/InAppMessages';
 
 const container = {
   hidden: { opacity: 0 },
@@ -35,6 +37,29 @@ export function Home() {
   const handleCTAClick = useCallback(() => {
     trackABEvent(group, 'click', '/');
   }, [group]);
+
+  // Gemini project recommendation after 30s
+  const geminiRecRef = useRef(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (geminiRecRef.current) return;
+      const pages = JSON.parse(sessionStorage.getItem('visited_pages') || '[]');
+      const hasDetail = pages.some((p: string) => p.startsWith('/projects/'));
+      if (!hasDetail) {
+        geminiRecRef.current = true;
+        suggestNextProject({
+          persona: localStorage.getItem('wh_persona') || 'unknown',
+          segment: localStorage.getItem('wh_segment') || 'casual',
+          viewedPages: pages,
+          timeOnSite: 30,
+          clicks: (window as any).__dataLayer?.engagementScore || 0,
+        }).then(insight => {
+          if (insight) triggerMessage(insight, 'Gemini Recommendation');
+        });
+      }
+    }, 30000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.div

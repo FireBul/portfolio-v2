@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Search, Zap, Target, Handshake } from 'lucide-react';
+import { X, Search, Zap, Target, Handshake, Sparkles } from 'lucide-react';
+import { interpretPersona, GEMINI_DISPLAY } from '../utils/geminiInsights';
 
 type PersonaKey = 'researcher' | 'scanner' | 'hunter' | 'decider';
 
@@ -52,6 +53,7 @@ const PERSONAS: Record<PersonaKey, PersonaInfo> = {
 export const BehavioralPersona: React.FC = () => {
   const [persona, setPersona] = useState<(PersonaInfo & { confidence: number }) | null>(null);
   const [visible, setVisible] = useState(false);
+  const [geminiInsight, setGeminiInsight] = useState<string | null>(null);
   const location = useLocation();
 
   const scrollSpeedsRef = useRef<number[]>([]);
@@ -151,9 +153,23 @@ export const BehavioralPersona: React.FC = () => {
     classifiedRef.current = true;
     setPersona({ ...info, confidence });
     setVisible(true);
+    // Store for cross-component access (Contact Gemini)
+    localStorage.setItem('wh_persona', info.name);
 
-    // Auto-hide after 15s
-    setTimeout(() => setVisible(false), 15000);
+    // Gemini persona interpretation
+    interpretPersona({
+      persona: info.name,
+      confidence,
+      scrollSpeed: Math.round(avgScrollSpeed),
+      dwellPerPage: Math.round(dwellPerPage),
+      detailViews,
+      totalPages: uniquePages,
+    }).then(insight => {
+      if (insight) setGeminiInsight(insight);
+    });
+
+    // Auto-hide after 20s (extended for Gemini content)
+    setTimeout(() => setVisible(false), 20000);
   }, []);
 
   // Check classification periodically after 25s
@@ -217,10 +233,21 @@ export const BehavioralPersona: React.FC = () => {
             </p>
           </div>
 
+          {/* Gemini Insight */}
+          {geminiInsight && (
+            <div className="mx-4 mb-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-2.5">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <Sparkles className="w-3 h-3 text-amber-400" />
+                <span className="text-[9px] font-mono text-amber-400 font-bold">{GEMINI_DISPLAY} 분석</span>
+              </div>
+              <p className="text-[10px] text-white/60 leading-relaxed">{geminiInsight}</p>
+            </div>
+          )}
+
           {/* Footer */}
           <div className="bg-white/[0.02] border-t border-white/5 px-4 py-2 text-center">
             <p className="text-zinc-600 text-[10px]">
-              스크롤 속도 · 클릭 패턴 · 체류 분포 기반 세그먼테이션
+              {geminiInsight ? `Powered by ${GEMINI_DISPLAY} — 실시간 행동 분석` : '스크롤 속도 · 클릭 패턴 · 체류 분포 기반 세그먼테이션'}
             </p>
           </div>
         </motion.div>

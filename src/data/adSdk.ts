@@ -201,6 +201,7 @@ export function collectUserData(): UserProfile {
   const deviceType = getDeviceType();
   const referrer = document.referrer || 'direct';
   const segment = classifySegment({ referrer, deviceType });
+  localStorage.setItem('wh_segment', segment);
   const consentLevel = state.consentLevel;
 
   const profile: UserProfile = {

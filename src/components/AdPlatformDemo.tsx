@@ -25,7 +25,9 @@ import {
   User,
   Server,
   LineChart,
+  Sparkles,
 } from 'lucide-react';
+import { interpretSdkPipeline, interpretAuction, GEMINI_DISPLAY } from '../utils/geminiInsights';
 import {
   type SdkStep,
   type SdkPipelineLog,
@@ -491,9 +493,40 @@ function SdkTab({
   onRerun: () => void;
 }) {
   const maxDuration = Math.max(...logs.map((l) => l.duration), 1);
+  const [sdkInsight, setSdkInsight] = useState<string | null>(null);
+  const insightFetchedRef = useRef(false);
+
+  useEffect(() => {
+    if (profile && logs.length > 0 && !insightFetchedRef.current) {
+      insightFetchedRef.current = true;
+      interpretSdkPipeline({
+        segment: profile.segment,
+        browser: profile.browser,
+        os: profile.os,
+        referrer: profile.referrer,
+        relevanceScore: profile.adRelevanceScore,
+        totalPipelineTime: logs.reduce((s, l) => s + l.duration, 0),
+        recommendedProjects: profile.interests,
+      }).then(insight => {
+        if (insight) setSdkInsight(insight);
+      });
+    }
+  }, [profile, logs]);
 
   return (
     <div className="space-y-4">
+      {/* Gemini SDK Insight */}
+      {sdkInsight && (
+        <div className="rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-3">
+          <div className="flex items-center gap-1.5 mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span className="text-[10px] font-mono text-amber-400 font-bold">{GEMINI_DISPLAY} 파이프라인 분석</span>
+          </div>
+          <p className="text-[11px] text-white/70 leading-relaxed">{sdkInsight}</p>
+          <p className="text-[9px] text-white/20 mt-1.5 font-mono">{GEMINI_DISPLAY}가 실시간 분석했습니다</p>
+        </div>
+      )}
+
       {/* User Profile Card */}
       {profile && (
         <div className="rounded-lg border border-white/10 bg-white/5 p-3">
@@ -782,12 +815,32 @@ function MmpTab() {
 function RtbTab({ profile }: { profile: UserProfile | null }) {
   const [history, setHistory] = useState<AuctionResult[]>(getAuctionHistory().slice(-5).reverse());
   const [liveAuction, setLiveAuction] = useState<AuctionResult | null>(null);
+  const [auctionInsight, setAuctionInsight] = useState<string | null>(null);
 
   const runLive = () => {
     const segment: UserSegment = profile?.segment || 'casual';
     const result = runAuction('home_banner', 'display', undefined, segment);
     setLiveAuction(result);
     setHistory([result, ...getAuctionHistory().slice(-4).reverse()]);
+    setAuctionInsight(null);
+
+    if (result.winnerId) {
+      const winner = result.participants.find(p => p.isWinner);
+      if (winner) {
+        interpretAuction({
+          slotType: result.slotType,
+          participants: result.participants.length,
+          winner: winner.campaignName,
+          winningEffectiveBid: winner.effectiveBid,
+          secondPrice: result.secondPrice,
+          savings: result.winningBid - result.secondPrice,
+          qualityScore: winner.qualityScore,
+          relevanceScore: winner.relevanceScore,
+        }).then(insight => {
+          if (insight) setAuctionInsight(insight);
+        });
+      }
+    }
   };
 
   return (
@@ -802,6 +855,18 @@ function RtbTab({ profile }: { profile: UserProfile | null }) {
 
       {/* Live Auction Detail */}
       {liveAuction && <AuctionCard auction={liveAuction} isLive />}
+
+      {/* Gemini Auction Insight */}
+      {auctionInsight && (
+        <div className="rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-3">
+          <div className="flex items-center gap-1.5 mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span className="text-[10px] font-mono text-amber-400 font-bold">{GEMINI_DISPLAY} 경매 분석</span>
+          </div>
+          <p className="text-[11px] text-white/70 leading-relaxed">{auctionInsight}</p>
+          <p className="text-[9px] text-white/20 mt-1.5 font-mono">Powered by {GEMINI_DISPLAY}</p>
+        </div>
+      )}
 
       {/* History */}
       <div>

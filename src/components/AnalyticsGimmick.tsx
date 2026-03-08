@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MousePointer2, FileText, Clock, ArrowDown, ChevronUp, ChevronDown, CheckCircle2 } from 'lucide-react';
+import { MousePointer2, FileText, Clock, ArrowDown, ChevronUp, ChevronDown, CheckCircle2, Sparkles } from 'lucide-react';
 import { triggerMessage } from './InAppMessages';
 import { MarkovEngine, getPageState, PageState, getPageName } from '../utils/markov';
+import { interpretEngagement, interpretMarkov, GEMINI_DISPLAY } from '../utils/geminiInsights';
 
 const formatTime = (seconds: number) => {
   const m = Math.floor(seconds / 60);
@@ -23,6 +24,10 @@ export const AnalyticsGimmick: React.FC = () => {
   const [predictions, setPredictions] = useState<{state: PageState, prob: number}[]>([]);
   const [accuracy, setAccuracy] = useState(0);
   const [showHitAnim, setShowHitAnim] = useState(false);
+
+  const [engagementInsight, setEngagementInsight] = useState<string | null>(null);
+  const [markovInsight, setMarkovInsight] = useState<string | null>(null);
+  const engagementMilestonesRef = useRef<Set<number>>(new Set());
 
   const location = useLocation();
   const engineRef = useRef(new MarkovEngine());
@@ -93,7 +98,15 @@ export const AnalyticsGimmick: React.FC = () => {
   // 4. Route Changes & Markov Logic
   useEffect(() => {
     const currentState = getPageState(location.pathname);
-    
+
+    // Store visited pages for cross-component access (Contact Gemini)
+    if (!sessionStorage.getItem('session_start')) {
+      sessionStorage.setItem('session_start', String(Date.now()));
+    }
+    const pages = JSON.parse(sessionStorage.getItem('visited_pages') || '[]');
+    pages.push(location.pathname);
+    sessionStorage.setItem('visited_pages', JSON.stringify(pages));
+
     // Pageview tracking
     setPageviews(prev => prev + 1);
     
@@ -156,8 +169,40 @@ export const AnalyticsGimmick: React.FC = () => {
     const scrollScore = Math.min(maxScroll / 6.66, 15); // 100% = 15pt
     const detailScore = Math.min(detailViews * 5, 10); // 2 views = 10pt
     
-    setScore(Math.round(clickScore + pvScore + timeScore + scrollScore + detailScore));
+    const newScore = Math.round(clickScore + pvScore + timeScore + scrollScore + detailScore);
+    setScore(newScore);
+    // Expose for cross-component access
+    (window as any).__dataLayer = { ...(window as any).__dataLayer, engagementScore: newScore };
   }, [clicks, pageviews, timeSpent, maxScroll, detailViews]);
+
+  // 6. Gemini Engagement Insight (at milestones 25, 50, 75)
+  useEffect(() => {
+    const milestone = score >= 75 ? 75 : score >= 50 ? 50 : score >= 25 ? 25 : 0;
+    if (milestone > 0 && !engagementMilestonesRef.current.has(milestone)) {
+      engagementMilestonesRef.current.add(milestone);
+      interpretEngagement({ clicks, pageviews, timeSpent, maxScroll, detailViews, score }).then(insight => {
+        if (insight) {
+          setEngagementInsight(insight);
+          triggerMessage(insight, `Gemini Insight`);
+        }
+      });
+    }
+  }, [score, clicks, pageviews, timeSpent, maxScroll, detailViews]);
+
+  // 7. Gemini Markov Insight (when accuracy >= 60%)
+  useEffect(() => {
+    const engine = engineRef.current;
+    if (accuracy >= 60 && engine.totalPredictions >= 3 && !markovInsight) {
+      interpretMarkov({
+        predictions: predictions.slice(0, 3).map(p => ({ page: getPageName(p.state), probability: p.prob })),
+        accuracy,
+        totalPredictions: engine.totalPredictions,
+        hits: engine.correctPredictions,
+      }).then(insight => {
+        if (insight) setMarkovInsight(insight);
+      });
+    }
+  }, [accuracy, predictions, markovInsight]);
 
   return (
     <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start pointer-events-none">
@@ -219,6 +264,18 @@ export const AnalyticsGimmick: React.FC = () => {
               </div>
             </div>
 
+            {/* Gemini Engagement Insight */}
+            {engagementInsight && (
+              <div className="mb-6 rounded-xl bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-3">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="text-[10px] font-mono text-amber-400 font-bold">{GEMINI_DISPLAY}</span>
+                </div>
+                <p className="text-[11px] text-white/70 leading-relaxed">{engagementInsight}</p>
+                <p className="text-[9px] text-white/20 mt-1.5 font-mono">Powered by Gemini — 실시간 행동 분석</p>
+              </div>
+            )}
+
             {/* Next Click Prediction */}
             <div>
               <div className="flex justify-between items-center mb-3">
@@ -253,6 +310,17 @@ export const AnalyticsGimmick: React.FC = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Gemini Markov Insight */}
+              {markovInsight && (
+                <div className="mt-3 rounded-lg bg-gradient-to-r from-amber-500/10 to-orange-500/10 border border-amber-500/20 p-2.5">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Sparkles className="w-3 h-3 text-amber-400" />
+                    <span className="text-[9px] font-mono text-amber-400 font-bold">{GEMINI_DISPLAY} 예측 해석</span>
+                  </div>
+                  <p className="text-[10px] text-white/60 leading-relaxed">{markovInsight}</p>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

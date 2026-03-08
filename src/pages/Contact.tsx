@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Github, Linkedin, Instagram, CheckCircle } from 'lucide-react';
+import { Mail, Phone, Github, Linkedin, Instagram, CheckCircle, Sparkles } from 'lucide-react';
 import { submitLead } from '../utils/crm';
+import { generateContactAssist, GEMINI_DISPLAY } from '../utils/geminiInsights';
 
 const container = {
   hidden: { opacity: 0 },
@@ -27,6 +28,25 @@ export function Contact() {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [contactInsight, setContactInsight] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Gather browsing context for Gemini assist
+    const dataLayer = (window as any).__dataLayer || {};
+    const sessionPages: string[] = JSON.parse(sessionStorage.getItem('visited_pages') || '[]');
+    const startTime = parseInt(sessionStorage.getItem('session_start') || String(Date.now()), 10);
+    const timeOnSite = Math.round((Date.now() - startTime) / 1000);
+
+    generateContactAssist({
+      persona: localStorage.getItem('wh_persona') || 'unknown',
+      segment: localStorage.getItem('wh_segment') || 'casual',
+      topViewedProjects: sessionPages.filter(p => p.startsWith('/projects/')).slice(0, 3),
+      engagementScore: dataLayer.engagementScore || 0,
+      timeOnSite,
+    }).then(insight => {
+      if (insight) setContactInsight(insight);
+    });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,7 +126,20 @@ export function Contact() {
 
         </motion.div>
 
-        <motion.div variants={item} className="p-8 md:p-12 rounded-3xl glass-panel h-fit">
+        <motion.div variants={item} className="space-y-6">
+          {/* Gemini Contact Assist */}
+          {contactInsight && (
+            <div className="rounded-2xl bg-gradient-to-br from-amber-500/10 via-orange-500/5 to-transparent border border-amber-500/20 p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="w-4 h-4 text-amber-400" />
+                <span className="text-xs font-mono text-amber-400 font-bold">{GEMINI_DISPLAY}가 분석한 당신의 관심사</span>
+              </div>
+              <p className="text-sm text-white/70 leading-relaxed">{contactInsight}</p>
+              <p className="text-[10px] text-white/20 mt-3 font-mono">{GEMINI_DISPLAY}가 실시간 분석했습니다</p>
+            </div>
+          )}
+
+          <div className="p-8 md:p-12 rounded-3xl glass-panel">
           <h2 className="text-2xl font-bold tracking-tight mb-8">문의하기</h2>
           {isSubmitted ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -191,6 +224,7 @@ export function Contact() {
               </button>
             </form>
           )}
+          </div>
         </motion.div>
       </div>
     </motion.div>
