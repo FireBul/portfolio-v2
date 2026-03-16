@@ -105,18 +105,37 @@ export async function trackVisitor(): Promise<void> {
   const referrer = document.referrer ? new URL(document.referrer).hostname : 'direct';
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown';
 
-  // IP geolocation (fire-and-forget, non-blocking)
+  // IP geolocation + org/ISP (fire-and-forget, non-blocking)
   let country = 'unknown';
   let city = 'unknown';
+  let org = 'unknown';
+  let ip = 'unknown';
   try {
     const geo = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
     if (geo.ok) {
       const data = await geo.json();
       country = data.country_name || 'unknown';
       city = data.city || 'unknown';
+      org = data.org || 'unknown';
+      ip = data.ip || 'unknown';
     }
   } catch {
     // geolocation 실패해도 무시
+  }
+
+  // Secondary enrichment: ipinfo.io (better org/company data)
+  if (org === 'unknown' || org.startsWith('AS')) {
+    try {
+      const info = await fetch('https://ipinfo.io/json', { signal: AbortSignal.timeout(3000) });
+      if (info.ok) {
+        const d = await info.json();
+        if (d.org) org = d.org;
+        if (country === 'unknown' && d.country) country = d.country;
+        if (city === 'unknown' && d.city) city = d.city;
+      }
+    } catch {
+      // fallback 실패해도 무시
+    }
   }
 
   try {
@@ -131,6 +150,7 @@ export async function trackVisitor(): Promise<void> {
       country,
       city,
       timezone,
+      org,
     }, { onConflict: 'visitor_id' });
     if (error) console.warn('[Visitor] upsert error:', error.message);
   } catch (err) {
