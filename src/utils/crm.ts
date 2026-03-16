@@ -49,5 +49,27 @@ export const submitLead = (data: LeadData) => {
     budget_range: data.budget
   });
 
+  // FormSubmit.co로 실제 이메일 전송
+  const formData = new FormData();
+  formData.append('name', data.name);
+  formData.append('email', data.email);
+  formData.append('_subject', `[포트폴리오 문의] ${data.inquiryType} — ${data.name}`);
+  formData.append('inquiryType', data.inquiryType);
+  formData.append('budget', data.budget);
+  formData.append('message', data.message);
+  formData.append('leadScore', String(score));
+  formData.append('_captcha', 'false');
+  formData.append('_template', 'table');
+
+  fetch('https://formsubmit.co/ajax/jarelrs@gmail.com', {
+    method: 'POST',
+    body: formData
+  }).catch(() => {
+    // 실패 시 mailto 폴백
+    const body = encodeURIComponent(`이름: ${data.name}\n이메일: ${data.email}\n유형: ${data.inquiryType}\n예산: ${data.budget}\n\n${data.message}`);
+    const subject = encodeURIComponent(`[포트폴리오 문의] ${data.inquiryType} — ${data.name}`);
+    window.open(`mailto:jarelrs@gmail.com?subject=${subject}&body=${body}`, '_blank');
+  });
+
   return leadRecord;
 };

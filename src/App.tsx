@@ -7,6 +7,7 @@ import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { Leadership } from './pages/Leadership';
 import { Contact } from './pages/Contact';
+import { ApiDocs } from './pages/ApiDocs';
 import { PortfolioPDF } from './pages/PortfolioPDF';
 import { Chatbot } from './components/Chatbot';
 import { InAppMessages } from './components/InAppMessages';
@@ -66,6 +67,7 @@ function App() {
           <Route path="projects/:id" element={<ProjectDetail />} />
           <Route path="leadership" element={<Leadership />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="api" element={<ApiDocs />} />
         </Route>
       </Routes>
     </BrowserRouter>

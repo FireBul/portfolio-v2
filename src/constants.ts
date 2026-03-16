@@ -4,6 +4,7 @@ export const NAV_LINKS = [
   { name: '프로젝트', path: '/projects' },
   { name: '리더십', path: '/leadership' },
   { name: '연락처', path: '/contact' },
+  { name: 'API', path: '/api' },
 ];
 
 export const PROJECTS = [
