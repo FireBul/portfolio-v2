@@ -135,6 +135,20 @@ export const PROJECTS = [
     ]
   },
   {
+    id: 'ai-governance',
+    title: 'AI 자율 거버넌스 시스템 (Private)',
+    category: 'private',
+    description: '37개 AI 페르소나가 24시간 자율 운영하는 3-Tier 거버넌스 프레임워크입니다. 17개 순차 Core Chain + 10개 On-Demand/Engineering + 10개 Factory 슬롯이 매일 자동 실행되며, 4중 Quality Gate와 5-State Circuit Breaker로 무인 품질 보증을 달성합니다.',
+    image: 'https://firebul.github.io/portfolio/assets/images/projects/ai-governance.png',
+    tags: ['AI Agents', '자율 운영', 'DevOps'],
+    link: '/projects/ai-governance',
+    metrics: [
+      { label: 'AI 페르소나', value: '37개' },
+      { label: '자율 운영', value: '24/7' },
+      { label: '품질 게이트', value: '4중' }
+    ]
+  },
+  {
     id: 'teflon-inspection',
     title: 'Teflon AI 검사 자동화 시스템 (Private)',
     category: 'private',

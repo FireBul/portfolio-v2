@@ -373,6 +373,48 @@ export const PROJECT_DETAILS: Record<string, any> = {
       ]
     }
   },
+  'ai-governance': {
+    subtitle: '37개 AI 페르소나 · 3-Tier 생태계 · 4중 Quality Gate · 5-State Circuit Breaker로 24/7 무인 운영되는 자가발전 거버넌스 프레임워크',
+    overview: {
+      background: 'Claude AI 에이전트 기반의 24시간 자율 운영 거버넌스 시스템입니다. 매일 00:00부터 23:00까지 37개의 AI 페르소나가 순차 또는 조건부로 실행되며, 계획 수립 → 품질 심사 → 코드 수정 → 효과 측정 → 정책 진화 → 안전 점검 → 문서 동기화의 7단계 Ops 루프와 시장 탐색 → 기획 → 비판 → 모델링 → 배포 설계 → 통합의 6단계 Biz 루프를 매일 자동으로 완주합니다. 50개 이상의 자동화 스크립트, 34개 프로토콜, 27개 페르소나 YAML 카드로 구성되어 있습니다.',
+      goal: '3-Tier 생태계(Governance Root → Factory Hub → Product Repos) 위에 4중 Quality Gate(입력 검증/증거 품질/안전 패턴/핸드오프 완전성)와 5-State Circuit Breaker(NORMAL→WARN→COACHED→BLOCKED→SUSPENDED)를 갖추어, 사람의 개입 없이 품질과 안전을 자동으로 보증하는 자가발전(Self-Evolution) 프레임워크를 구축했습니다.',
+      image: 'https://firebul.github.io/portfolio/assets/images/projects/ai-governance.png'
+    },
+    problems: [
+      { title: '수동 거버넌스의 한계', desc: '24시간 운영되는 시스템을 사람이 매일 점검하는 것은 비현실적 — 37개 AI 페르소나로 자동화' },
+      { title: '계획-실행 분리 부재', desc: '기존 24개 페르소나는 계획/심사/분석만 수행하고 실제 코드를 작성하는 역할이 없었음 — E시리즈(Software Engineer/DevOps/Data Engineer) 3명 추가' },
+      { title: '매출 공장 인력 부족', desc: '3개 엔진(Cash/Factory/Margin)을 5명으로 커버 불가 — F시리즈를 10명(Dev 3 + Ops 3 + Biz 4)으로 확대' },
+      { title: '단일 레포 병목', desc: '거버넌스 + 제품 코드가 같은 레포에 있으면 충돌 — 3-Tier 분리(Governance Root / Factory Hub / Product Repos)' }
+    ],
+    solutionGoal: 'Tier 1(거버넌스 루트)이 프로토콜과 페르소나를 소유하고, Tier 2(팩토리 허브)가 매출 공장을 운영하며, Tier 3(제품 레포)가 실제 MVP를 생산하는 3계층 구조를 설계했습니다. dual-write 파이프라인으로 Tier 간 상태를 동기화하고, 시간대 격리(Core 00~16h / On-Demand+Engineering 17~23h / Factory 17~21:30h)로 충돌을 원천 차단했습니다.',
+    process: [
+      { step: 1, title: '37-Slot 페르소나 시스템 설계', desc: 'PD0(일일 부트스트랩) → L시리즈 7명(Ops 루프) → B시리즈 6명(Biz 루프) → CC0(충돌 탐지) → D시리즈 2명(마감) + QA0/IR0/W0/M0/HG0/MR0/MR1(On-Demand 7명) + E0/E1/E2(Engineering 3명) + F0~F9(Factory 10명)의 37-Slot 체계를 설계. 각 페르소나에 YAML 카드(core_mission, boundaries, guards, performance_targets, review_bundle) 정의' },
+      { step: 2, title: '4중 Gate + 5-State Circuit Breaker', desc: 'Gate-A(선행 산출물 검증) → Gate-B(C/R/D 증거 품질) → Gate-C(파괴적 변경 탐지) → Gate-D(5항목 핸드오프 완전성) 4중 검증. NORMAL→WARN→COACHED→BLOCKED→SUSPENDED 5단계 회로차단기로 장애 시 자동 차단 + IR0 인시던트 대응 발동' },
+      { step: 3, title: '3-Tier 생태계 + Dual-Write', desc: 'Tier 1(pure-flon/ops-self-evolution-governance)이 27개 페르소나 + 50개 스크립트를 소유. sync_from_upstream.sh로 Tier 2(factory-governance)에 미러링. verify_sync.sh로 정합성 검증. Tier 2의 create_mvp_repo.sh가 Tier 3(product repos)를 자동 생성' },
+      { step: 4, title: 'E시리즈(Engineering) + F시리즈(Factory 10명)', desc: 'E0(Software Engineer): scripts/ 코드 구현. E1(DevOps): launchd/CI/CD 실행. E2(Data Engineer): DB/백업/마이그레이션. Factory F시리즈를 Dev Team(F1 Frontend/F2 Backend/F3 Game) + Ops Team(F4 DevOps/F5 DBA/F6 QA) + Biz Team(F7 Experimenter/F8 Channeler/F9 CFO)으로 재설계' },
+      { step: 5, title: 'launchd 무인 스케줄링 + 모니터링', desc: 'macOS launchd plist 기반 영구 스케줄링으로 28개 SKILL.md를 무인 실행. win-monitor-3day가 2시간마다 헬스체크. Telegram Bot으로 실시간 알림. pre-push guard 8종 검증으로 품질 보증' }
+    ],
+    results: {
+      before: '수동 거버넌스 (사람 의존)',
+      after: '24/7 AI 자율 운영 시스템',
+      metrics: [
+        { value: '37개', label: 'AI 페르소나 슬롯' },
+        { value: '24/7', label: '무인 자율 운영' },
+        { value: '4중', label: 'Quality Gate' },
+        { value: '50+', label: '자동화 스크립트' }
+      ]
+    },
+    techStack: ['Python', 'Bash', 'YAML', 'Claude AI (Opus/Sonnet)', 'GitHub Actions', 'macOS launchd', 'Telegram Bot', 'Git', 'SQLite', 'Markdown', 'GitHub Discussions', 'GitHub Issues'],
+    learnings: {
+      highlight: 'AI 에이전트 시스템의 핵심은 모델 능력이 아니라 거버넌스 프레임워크입니다. 37개 페르소나가 서로 충돌하지 않고 조화롭게 작동하려면, 명확한 경계(boundaries), 순차 핸드오프(handoff), 자동 품질 검증(gates), 장애 차단(circuit breaker)이 필수입니다. "AI를 자율적으로 운영한다"는 것은 결국 "AI를 신뢰할 수 있는 구조를 만든다"는 것과 같습니다.',
+      points: [
+        '페르소나 설계의 핵심 — 역할 분리: 심사자(L1)와 수정자(L2/E0)를 분리하고, 비판자(B2)는 낙관적 보고를 금지하며, 설계자(B4)와 실행자(E1)를 분리하는 것이 자율 시스템의 신뢰성 기반',
+        '3-Tier 격리가 확장성을 만든다: 거버넌스 → 팩토리 → 제품을 계층으로 분리하면 각 Tier가 독립적으로 진화할 수 있고, dual-write로 상태만 동기화하면 됨',
+        '자동 채용 메커니즘: Factory F1~F9는 조건(MVP 수, 실험 수, 매출 등) 충족 시 F0가 자동 활성화 — 사람이 개입하지 않아도 팀이 스스로 확장',
+        '8종 pre-push guard가 품질을 지킨다: 페르소나 헤더 검증, 증거 품질, 안전 패턴, 핸드오프 완전성, 프로토콜 수정 권한, STATE_LEDGER 무결성, 회로차단기 상태까지 자동으로 검증하여 결함이 있는 커밋이 메인 브랜치에 절대 도달하지 않음'
+      ]
+    }
+  },
   'teflon-inspection': {
     subtitle: '26,700줄 Python · YOLOv8 실시간 결함 검출 · 97개 REST API · 멀티카메라 · 산업 프로토콜 통합의 풀스택 제조 검사 자동화 시스템',
     overview: {
