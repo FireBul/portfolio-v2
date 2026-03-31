@@ -7,6 +7,9 @@ export const NAV_LINKS = [
   { name: 'API', path: '/api' },
 ];
 
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (path: string) => `${basePath}${path.startsWith('/') ? path : `/${path}`}`;
+
 export const PROJECTS = [
   {
     id: 'ads-result',
@@ -138,14 +141,28 @@ export const PROJECTS = [
     id: 'ai-governance',
     title: 'AI 자율 거버넌스 시스템 (Private)',
     category: 'private',
-    description: '37개 AI 페르소나가 24시간 자율 운영하는 3-Tier 거버넌스 프레임워크입니다. 17개 순차 Core Chain + 10개 On-Demand/Engineering + 10개 Factory 슬롯이 매일 자동 실행되며, 4중 Quality Gate와 5-State Circuit Breaker로 무인 품질 보증을 달성합니다.',
+    description: '24/7 AI 거버넌스 운영체계로 계획-실행-검증 루프를 자동화하고 품질 게이트를 강제합니다. Governance/Factory 레이어에서 생성된 실행 결과는 pure-flon.com의 제품/견적/SaaS/tools 퍼블릭 표면으로 출하됩니다.',
     image: 'https://firebul.github.io/portfolio/assets/images/projects/ai-governance.png',
-    tags: ['AI Agents', '자율 운영', 'DevOps'],
+    tags: ['AI Governance', '24/7 운영', 'Quality Gates'],
     link: '/projects/ai-governance',
     metrics: [
-      { label: 'AI 페르소나', value: '37개' },
+      { label: '운영 루프', value: '24/7' },
+      { label: '품질 게이트', value: '4중' },
+      { label: '실행 레이어', value: 'Gov + Factory' }
+    ]
+  },
+  {
+    id: 'pure-flon-com',
+    title: 'pure-flon.com Public Product Factory',
+    category: 'product',
+    description: 'AI 거버넌스 실행 결과를 실제 고객 표면으로 출하한 public case study입니다. 홈, B2B 제품 상세, RFQ, SaaS 가격 페이지, tools 유틸리티까지 운영해 productization과 monetization 역량을 입증했습니다.',
+    image: withBase('/assets/images/projects/pure-flon-com/home.png'),
+    tags: ['Public Shipping', 'B2B', 'SaaS', 'Lead Funnel'],
+    link: '/projects/pure-flon-com',
+    metrics: [
+      { label: 'Live Surface', value: '5개' },
       { label: '자율 운영', value: '24/7' },
-      { label: '품질 게이트', value: '4중' }
+      { label: '증거 캡처', value: '5장' }
     ]
   },
   {
