@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, CheckCircle2, Target, Lightbulb, Wrench, Lock, Unlock, Play } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Target, Lightbulb, Wrench, Lock, Unlock, Play, ExternalLink } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { PROJECT_DETAILS } from '../data/projectDetails';
 import { useAdMode } from '../components/AdPlatformDemo';
@@ -121,6 +121,46 @@ export function ProjectDetail() {
               <p className="text-lg text-zinc-300 leading-relaxed">{details.overview.goal}</p>
             </div>
           </motion.section>
+
+          {/* Capture Gallery */}
+          {details.gallery && (
+            <motion.section variants={item}>
+              <h2 className="text-2xl font-bold mb-6 flex items-center gap-3 text-white">
+                <Target className="text-emerald-400" /> Live Capture Gallery
+              </h2>
+              <div className="grid md:grid-cols-2 gap-6">
+                {details.gallery.map((capture: any, i: number) => (
+                  <div key={i} className="glass-panel rounded-3xl overflow-hidden border border-white/5">
+                    <img
+                      src={capture.image}
+                      alt={`${project.title} capture ${i + 1}`}
+                      className="w-full h-auto object-cover"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="p-6 space-y-3">
+                      <h3 className="text-lg font-bold text-white">{capture.title}</h3>
+                      <p className="text-zinc-400">{capture.caption}</p>
+                      <p className="text-sm text-emerald-300/90">
+                        <span className="font-semibold text-emerald-300">증명 역량:</span> {capture.competency}
+                      </p>
+                      {capture.url && (
+                        <a
+                          href={capture.url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors"
+                        >
+                          Live Surface 보기
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.section>
+          )}
 
           {/* Problems */}
           {details.problems && (

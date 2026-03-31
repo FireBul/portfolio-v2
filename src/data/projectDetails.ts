@@ -374,44 +374,123 @@ export const PROJECT_DETAILS: Record<string, any> = {
     }
   },
   'ai-governance': {
-    subtitle: '37개 AI 페르소나 · 3-Tier 생태계 · 4중 Quality Gate · 5-State Circuit Breaker로 24/7 무인 운영되는 자가발전 거버넌스 프레임워크',
+    subtitle: '24/7 AI governance operating system으로 계획-실행-검증을 자동화하고, Factory 출력을 pure-flon.com public surface로 연결한 orchestration case',
     overview: {
-      background: 'Claude AI 에이전트 기반의 24시간 자율 운영 거버넌스 시스템입니다. 매일 00:00부터 23:00까지 37개의 AI 페르소나가 순차 또는 조건부로 실행되며, 계획 수립 → 품질 심사 → 코드 수정 → 효과 측정 → 정책 진화 → 안전 점검 → 문서 동기화의 7단계 Ops 루프와 시장 탐색 → 기획 → 비판 → 모델링 → 배포 설계 → 통합의 6단계 Biz 루프를 매일 자동으로 완주합니다. 50개 이상의 자동화 스크립트, 34개 프로토콜, 27개 페르소나 YAML 카드로 구성되어 있습니다.',
-      goal: '3-Tier 생태계(Governance Root → Factory Hub → Product Repos) 위에 4중 Quality Gate(입력 검증/증거 품질/안전 패턴/핸드오프 완전성)와 5-State Circuit Breaker(NORMAL→WARN→COACHED→BLOCKED→SUSPENDED)를 갖추어, 사람의 개입 없이 품질과 안전을 자동으로 보증하는 자가발전(Self-Evolution) 프레임워크를 구축했습니다.',
+      background: '거버넌스 레이어에서 의사결정과 품질 기준을 만들고, 실행 레이어에서 실제 산출물을 출하하는 24/7 운영체계입니다. 핵심은 AI 에이전트 개수보다 운영 루프의 신뢰성으로, 계획-심사-실행-검증-핸드오프를 하루 단위로 자동 완주하도록 설계했습니다.',
+      goal: 'Governance Root → Factory Hub → Product Surface 흐름을 고정하고, 4중 품질 게이트와 회로차단기 정책으로 무인 운영의 리스크를 낮추는 것이 목표였습니다. 결과적으로 private 운영체계가 pure-flon.com public 실행 결과로 이어지는 연결 구조를 만들었습니다.',
       image: 'https://firebul.github.io/portfolio/assets/images/projects/ai-governance.png'
     },
     problems: [
-      { title: '수동 거버넌스의 한계', desc: '24시간 운영되는 시스템을 사람이 매일 점검하는 것은 비현실적 — 37개 AI 페르소나로 자동화' },
-      { title: '계획-실행 분리 부재', desc: '기존 24개 페르소나는 계획/심사/분석만 수행하고 실제 코드를 작성하는 역할이 없었음 — E시리즈(Software Engineer/DevOps/Data Engineer) 3명 추가' },
-      { title: '매출 공장 인력 부족', desc: '3개 엔진(Cash/Factory/Margin)을 5명으로 커버 불가 — F시리즈를 10명(Dev 3 + Ops 3 + Biz 4)으로 확대' },
-      { title: '단일 레포 병목', desc: '거버넌스 + 제품 코드가 같은 레포에 있으면 충돌 — 3-Tier 분리(Governance Root / Factory Hub / Product Repos)' }
+      { title: '의사결정 누락 리스크', desc: '무인 운영에서 기준 문서와 실행 로그가 분리되면 품질 저하가 누적됨' },
+      { title: '계획-실행 단절', desc: '전략 문서가 실제 코드/배포 표면으로 이어지지 않으면 운영체계의 가치가 증명되지 않음' },
+      { title: '다중 레포 충돌', desc: '거버넌스와 제품 레포를 같은 흐름으로 운영하면 충돌과 중복 실행이 발생' },
+      { title: '라이브 신뢰성', desc: '검증되지 않은 변경이 바로 public 표면에 반영되면 신뢰 손실 위험이 큼' }
     ],
-    solutionGoal: 'Tier 1(거버넌스 루트)이 프로토콜과 페르소나를 소유하고, Tier 2(팩토리 허브)가 매출 공장을 운영하며, Tier 3(제품 레포)가 실제 MVP를 생산하는 3계층 구조를 설계했습니다. dual-write 파이프라인으로 Tier 간 상태를 동기화하고, 시간대 격리(Core 00~16h / On-Demand+Engineering 17~23h / Factory 17~21:30h)로 충돌을 원천 차단했습니다.',
+    solutionGoal: '거버넌스 규칙과 실행 산출물을 3계층으로 분리하고, 승격 경로(draft → shadow → canary → active)를 강제해 운영 품질을 확보했습니다. 동시에 public proof는 pure-flon.com 프로젝트로 분리해 recruiter가 private 운영체계와 public 결과를 각각 빠르게 스캔할 수 있도록 재구성했습니다.',
     process: [
-      { step: 1, title: '37-Slot 페르소나 시스템 설계', desc: 'PD0(일일 부트스트랩) → L시리즈 7명(Ops 루프) → B시리즈 6명(Biz 루프) → CC0(충돌 탐지) → D시리즈 2명(마감) + QA0/IR0/W0/M0/HG0/MR0/MR1(On-Demand 7명) + E0/E1/E2(Engineering 3명) + F0~F9(Factory 10명)의 37-Slot 체계를 설계. 각 페르소나에 YAML 카드(core_mission, boundaries, guards, performance_targets, review_bundle) 정의' },
-      { step: 2, title: '4중 Gate + 5-State Circuit Breaker', desc: 'Gate-A(선행 산출물 검증) → Gate-B(C/R/D 증거 품질) → Gate-C(파괴적 변경 탐지) → Gate-D(5항목 핸드오프 완전성) 4중 검증. NORMAL→WARN→COACHED→BLOCKED→SUSPENDED 5단계 회로차단기로 장애 시 자동 차단 + IR0 인시던트 대응 발동' },
-      { step: 3, title: '3-Tier 생태계 + Dual-Write', desc: 'Tier 1(pure-flon/ops-self-evolution-governance)이 27개 페르소나 + 50개 스크립트를 소유. sync_from_upstream.sh로 Tier 2(factory-governance)에 미러링. verify_sync.sh로 정합성 검증. Tier 2의 create_mvp_repo.sh가 Tier 3(product repos)를 자동 생성' },
-      { step: 4, title: 'E시리즈(Engineering) + F시리즈(Factory 10명)', desc: 'E0(Software Engineer): scripts/ 코드 구현. E1(DevOps): launchd/CI/CD 실행. E2(Data Engineer): DB/백업/마이그레이션. Factory F시리즈를 Dev Team(F1 Frontend/F2 Backend/F3 Game) + Ops Team(F4 DevOps/F5 DBA/F6 QA) + Biz Team(F7 Experimenter/F8 Channeler/F9 CFO)으로 재설계' },
-      { step: 5, title: 'launchd 무인 스케줄링 + 모니터링', desc: 'macOS launchd plist 기반 영구 스케줄링으로 28개 SKILL.md를 무인 실행. win-monitor-3day가 2시간마다 헬스체크. Telegram Bot으로 실시간 알림. pre-push guard 8종 검증으로 품질 보증' }
+      { step: 1, title: '운영 루프 표준화', desc: '계획 수립 → 체크리스트 실행 → 검증 리포트 → 핸드오프까지 공통 템플릿으로 통일해 실행 편차를 줄였습니다.' },
+      { step: 2, title: '품질 게이트 강제', desc: '입력 검증, 증거 품질, 안전 패턴, 핸드오프 완전성의 4중 게이트를 통과해야 다음 단계로 진입하도록 구성했습니다.' },
+      { step: 3, title: '3-Tier 분리 운영', desc: '거버넌스 규칙 관리 레이어와 실행 레이어, 퍼블릭 표면 레이어를 분리해 충돌 없이 병행 운영하도록 만들었습니다.' },
+      { step: 4, title: '승격 경로 운영', desc: 'draft → shadow → canary → active 경로를 유지해 위험한 변경이 바로 라이브로 확산되지 않도록 제어했습니다.' },
+      { step: 5, title: 'Public execution 연결', desc: 'private orchestration 결과를 pure-flon.com의 제품/견적/SaaS/tools 표면으로 연결해 외부에서 확인 가능한 실행 증거를 확보했습니다.' }
     ],
     results: {
-      before: '수동 거버넌스 (사람 의존)',
-      after: '24/7 AI 자율 운영 시스템',
+      before: '문서 중심 운영 (public 증거 약함)',
+      after: '24/7 운영 + public shipping 연결',
       metrics: [
-        { value: '37개', label: 'AI 페르소나 슬롯' },
-        { value: '24/7', label: '무인 자율 운영' },
-        { value: '4중', label: 'Quality Gate' },
-        { value: '50+', label: '자동화 스크립트' }
+        { value: '24/7', label: '운영 루프' },
+        { value: '4중', label: '품질 게이트' },
+        { value: '3-Tier', label: '운영 구조' },
+        { value: '5개', label: 'Public surface' }
       ]
     },
-    techStack: ['Python', 'Bash', 'YAML', 'Claude AI (Opus/Sonnet)', 'GitHub Actions', 'macOS launchd', 'Telegram Bot', 'Git', 'SQLite', 'Markdown', 'GitHub Discussions', 'GitHub Issues'],
+    techStack: ['Python', 'TypeScript', 'Bash', 'YAML', 'Paperclip', 'GitHub Issues/Discussions', 'launchd', 'SQLite', 'React', 'Vite'],
     learnings: {
-      highlight: 'AI 에이전트 시스템의 핵심은 모델 능력이 아니라 거버넌스 프레임워크입니다. 37개 페르소나가 서로 충돌하지 않고 조화롭게 작동하려면, 명확한 경계(boundaries), 순차 핸드오프(handoff), 자동 품질 검증(gates), 장애 차단(circuit breaker)이 필수입니다. "AI를 자율적으로 운영한다"는 것은 결국 "AI를 신뢰할 수 있는 구조를 만든다"는 것과 같습니다.',
+      highlight: 'AI 운영체계의 핵심은 에이전트 수가 아니라 품질 게이트와 실행 연결성입니다. private orchestration을 public 결과와 분리해 보여주면, 운영 안정성과 제품 출하 능력을 동시에 설명할 수 있습니다.',
       points: [
-        '페르소나 설계의 핵심 — 역할 분리: 심사자(L1)와 수정자(L2/E0)를 분리하고, 비판자(B2)는 낙관적 보고를 금지하며, 설계자(B4)와 실행자(E1)를 분리하는 것이 자율 시스템의 신뢰성 기반',
-        '3-Tier 격리가 확장성을 만든다: 거버넌스 → 팩토리 → 제품을 계층으로 분리하면 각 Tier가 독립적으로 진화할 수 있고, dual-write로 상태만 동기화하면 됨',
-        '자동 채용 메커니즘: Factory F1~F9는 조건(MVP 수, 실험 수, 매출 등) 충족 시 F0가 자동 활성화 — 사람이 개입하지 않아도 팀이 스스로 확장',
-        '8종 pre-push guard가 품질을 지킨다: 페르소나 헤더 검증, 증거 품질, 안전 패턴, 핸드오프 완전성, 프로토콜 수정 권한, STATE_LEDGER 무결성, 회로차단기 상태까지 자동으로 검증하여 결함이 있는 커밋이 메인 브랜치에 절대 도달하지 않음'
+        '운영 신뢰성: 실행 전에 품질 게이트를 강제하면 무인 운영에서도 회귀 리스크를 낮출 수 있음',
+        '표면 분리 전략: private 운영체계 설명과 public 결과 증거를 분리하면 이해 속도와 설득력이 동시에 상승',
+        '승격 경로의 가치: shadow/canary 단계를 생략하지 않는 것이 장기 운영 비용을 줄이는 핵심',
+        '증거 중심 커뮤니케이션: 캡처/링크/검증 로그를 함께 제공해야 운영 성과가 재현 가능한 경험으로 남음'
+      ]
+    }
+  },
+  'pure-flon-com': {
+    subtitle: 'AI governance 실행 결과를 실제 고객 접점으로 출하한 public case study: 홈, B2B 제품, RFQ, SaaS, tools',
+    overview: {
+      background: 'pure-flon.com은 private 운영체계에서 만들어진 실행 결과를 외부 고객이 직접 확인할 수 있게 만든 public product surface입니다. 단일 랜딩 페이지가 아니라 제품 상세, 문의 퍼널, SaaS 가격, 도구 배포까지 연결된 구조로 운영되고 있습니다.',
+      goal: 'recruiter와 이해관계자가 "실제로 출하된 표면"을 빠르게 검증할 수 있도록, 핵심 URL 5개를 캡처하고 각 화면이 증명하는 역량을 명확히 매핑했습니다.',
+      image: '/assets/images/projects/pure-flon-com/home.png'
+    },
+    problems: [
+      { title: 'Public proof 부족', desc: 'private 시스템 설명만으로는 실제 제품화 역량을 검증하기 어려움' },
+      { title: '표면 파편화', desc: '홈/제품/문의/SaaS/tools가 따로 보이면 실행 스토리가 단절됨' },
+      { title: 'Live 리스크 노출', desc: '404/405 같은 broken surface를 증거로 쓰면 신뢰가 하락함' },
+      { title: '역량 메시지 불명확', desc: '캡처만 나열하면 화면이 무엇을 증명하는지 전달되지 않음' }
+    ],
+    solutionGoal: '사용 가능한 5개 라이브 표면만 선별하고, 각 캡처에 역량 메시지를 붙여 evidence-driven case study로 재구성했습니다. `products/`(404)와 제품 챗봇 open state(`api/chat/message` 405)는 의도적으로 제외해 리스크를 통제했습니다.',
+    process: [
+      { step: 1, title: '표면 선별', desc: '홈, 제품 상세, RFQ, SaaS, tools 5개 URL을 우선순위 기반으로 확정했습니다.' },
+      { step: 2, title: '라이브 검증', desc: '캡처 전 각 URL 상태를 확인하고 broken surface는 증거 목록에서 제외했습니다.' },
+      { step: 3, title: '캡처 생성', desc: 'Playwright full-page 캡처를 생성해 포트폴리오 정적 자산으로 저장했습니다.' },
+      { step: 4, title: '메시지 매핑', desc: '각 화면별로 productization, lead funnel, monetization, shipping breadth 메시지를 연결했습니다.' },
+      { step: 5, title: '상세 페이지 통합', desc: '프로젝트 상세에서 갤러리 형태로 렌더링해 검증 가능한 public proof 흐름을 완성했습니다.' }
+    ],
+    results: {
+      before: 'Private narrative 중심',
+      after: 'Public evidence 중심 case study',
+      metrics: [
+        { value: '5개', label: 'Live surface' },
+        { value: '5장', label: 'Capture 반영' },
+        { value: '2개', label: 'Broken surface 제외' },
+        { value: '24/7', label: '운영 연결성' }
+      ]
+    },
+    gallery: [
+      {
+        title: '홈 (Landing + 운영 메시지)',
+        image: '/assets/images/projects/pure-flon-com/home.png',
+        caption: '브랜드 포지셔닝과 운영 상태를 첫 화면에서 전달',
+        competency: 'Bilingual communication + 24/7 운영 표면',
+        url: 'https://pure-flon.com/'
+      },
+      {
+        title: 'B2B 제품 상세',
+        image: '/assets/images/projects/pure-flon-com/product-esd-pfa-tube.png',
+        caption: '제품 기술 정보와 전환 CTA를 함께 배치한 상세 페이지',
+        competency: 'Technical IA + productization execution',
+        url: 'https://pure-flon.com/products/esd-pfa-tube/'
+      },
+      {
+        title: 'RFQ / Quote 퍼널',
+        image: '/assets/images/projects/pure-flon-com/quote.png',
+        caption: '고객 문의 수집을 위한 견적 입력 흐름',
+        competency: 'Lead funnel design + sales ops 연결',
+        url: 'https://pure-flon.com/quote/'
+      },
+      {
+        title: 'SaaS Pricing Surface',
+        image: '/assets/images/projects/pure-flon-com/saas-ai-ops-autopilot.png',
+        caption: '요금제와 가치 제안을 구조화한 SaaS 랜딩',
+        competency: 'Packaging + monetization thinking',
+        url: 'https://pure-flon.com/saas/ai-ops-autopilot/'
+      },
+      {
+        title: 'Tools Distribution',
+        image: '/assets/images/projects/pure-flon-com/tools.png',
+        caption: '유틸리티를 모아 배포하는 확장 표면',
+        competency: 'Shipping breadth + utility/SEO lane',
+        url: 'https://pure-flon.com/tools/'
+      }
+    ],
+    techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Playwright (capture)', 'B2B Product IA', 'RFQ Funnel', 'SaaS Pricing'],
+    learnings: {
+      highlight: 'public case study는 "얼마나 많이 만들었는가"보다 "무엇을 검증 가능하게 보여주는가"가 중요했습니다. 같은 프로젝트라도 live surface와 증명 메시지를 매핑하면 설득력이 크게 올라갑니다.',
+      points: [
+        '증거 선별: live 상태가 불안정한 표면은 과감히 제외해야 전체 신뢰도를 지킬 수 있음',
+        '표면별 역할 분리: 홈/제품/견적/SaaS/tools가 각각 다른 전환 목적을 가지도록 설계해야 함',
+        '캡처 품질: full-page 캡처가 정보 구조와 CTA 맥락을 가장 명확하게 전달함',
+        '운영 연결성: private governance 설명과 public shipping 증거를 함께 제시할 때 실행 역량이 명확해짐'
       ]
     }
   },
