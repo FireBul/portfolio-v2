@@ -381,7 +381,7 @@ export const PROJECT_DETAILS: Record<string, any> = {
     overview: {
       background: '거버넌스 레이어에서 의사결정과 품질 기준을 만들고, 실행 레이어에서 실제 산출물을 출하하는 24/7 운영체계입니다. 핵심은 AI 에이전트 개수보다 운영 루프의 신뢰성으로, 계획-심사-실행-검증-핸드오프를 하루 단위로 자동 완주하도록 설계했습니다.',
       goal: 'Governance Root → Factory Hub → Product Surface 흐름을 고정하고, 4중 품질 게이트와 회로차단기 정책으로 무인 운영의 리스크를 낮추는 것이 목표였습니다. 결과적으로 private 운영체계가 pure-flon.com public 실행 결과로 이어지는 연결 구조를 만들었습니다.',
-      image: 'https://firebul.github.io/portfolio/assets/images/projects/ai-governance.png'
+      image: withBase('/assets/images/projects/ai-governance/governance-operating-map.svg')
     },
     problems: [
       { title: '의사결정 누락 리스크', desc: '무인 운영에서 기준 문서와 실행 로그가 분리되면 품질 저하가 누적됨' },

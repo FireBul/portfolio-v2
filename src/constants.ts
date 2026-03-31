@@ -142,7 +142,7 @@ export const PROJECTS = [
     title: 'AI 자율 거버넌스 시스템 (Private)',
     category: 'private',
     description: '24/7 AI 거버넌스 운영체계로 계획-실행-검증 루프를 자동화하고 품질 게이트를 강제합니다. Governance/Factory 레이어에서 생성된 실행 결과는 pure-flon.com의 제품/견적/SaaS/tools 퍼블릭 표면으로 출하됩니다.',
-    image: 'https://firebul.github.io/portfolio/assets/images/projects/ai-governance.png',
+    image: withBase('/assets/images/projects/ai-governance/governance-operating-map.svg'),
     tags: ['AI Governance', '24/7 운영', 'Quality Gates'],
     link: '/projects/ai-governance',
     metrics: [
