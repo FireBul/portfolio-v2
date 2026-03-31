@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, Github, Linkedin, Instagram, CheckCircle, Sparkles } from 'lucide-react';
 import { submitLead } from '../utils/crm';
+import { trackPageEvent } from '../utils/pageEvents';
 import { generateContactAssist, GEMINI_DISPLAY } from '../utils/geminiInsights';
 
 const container = {
@@ -51,6 +52,10 @@ export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     submitLead(formData);
+    trackPageEvent('contact_form_submit', undefined, {
+      inquiryType: formData.inquiryType,
+      budget: formData.budget,
+    });
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);

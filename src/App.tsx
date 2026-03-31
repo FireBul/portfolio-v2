@@ -17,6 +17,7 @@ import { BehavioralPersona } from './components/BehavioralPersona';
 import { ABTestReveal } from './components/ABTestReveal';
 import { AdPlatformDemo, AdModeProvider } from './components/AdPlatformDemo';
 import { trackPageView, initScrollTracking } from './utils/analytics';
+import { usePageTracking } from './hooks/usePageTracking';
 
 function RouteTracker() {
   const location = useLocation();
@@ -24,6 +25,8 @@ function RouteTracker() {
   useEffect(() => {
     trackPageView(location.pathname);
   }, [location.pathname]);
+
+  usePageTracking();
 
   return null;
 }

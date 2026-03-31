@@ -110,6 +110,7 @@ export async function trackVisitor(): Promise<void> {
   let city = 'unknown';
   let org = 'unknown';
   let ip = 'unknown';
+  let asn = 'unknown';
   try {
     const geo = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
     if (geo.ok) {
@@ -118,6 +119,7 @@ export async function trackVisitor(): Promise<void> {
       city = data.city || 'unknown';
       org = data.org || 'unknown';
       ip = data.ip || 'unknown';
+      asn = data.asn || 'unknown';
     }
   } catch {
     // geolocation 실패해도 무시
@@ -151,6 +153,8 @@ export async function trackVisitor(): Promise<void> {
       city,
       timezone,
       org,
+      ip_address: ip,
+      asn,
     }, { onConflict: 'visitor_id' });
     if (error) console.warn('[Visitor] upsert error:', error.message);
   } catch (err) {

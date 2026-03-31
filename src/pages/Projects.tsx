@@ -5,6 +5,7 @@ import { Search } from 'lucide-react';
 import { PROJECTS } from '../constants';
 import { useAdMode } from '../components/AdPlatformDemo';
 import { SearchAds } from '../components/ads/SearchAds';
+import { trackPageEvent } from '../utils/pageEvents';
 
 const CATEGORIES = [
   { id: 'all', label: '전체' },
@@ -13,6 +14,7 @@ const CATEGORIES = [
   { id: 'data', label: '데이터' },
   { id: 'crm', label: 'CRM' },
   { id: 'policy', label: '정책' },
+  { id: 'product', label: 'Product' },
   { id: 'private', label: 'Private' },
 ];
 
@@ -53,7 +55,7 @@ export function Projects() {
           프로젝트
         </h1>
         <p className="text-xl text-zinc-400 max-w-2xl leading-relaxed">
-          광고·커머스·CRM·데이터·AI/ML 영역의 프로젝트를 문제정의 → 실행 → KPI 성과 기준으로 정리했습니다.
+          광고·커머스·CRM·데이터·Product·AI/ML 영역의 프로젝트를 문제정의 → 실행 → KPI 성과 기준으로 정리했습니다.
         </p>
       </motion.div>
 
@@ -61,7 +63,10 @@ export function Projects() {
         {CATEGORIES.map(category => (
           <button
             key={category.id}
-            onClick={() => setActiveCategory(category.id)}
+            onClick={() => {
+              setActiveCategory(category.id);
+              trackPageEvent('category_filter', category.id);
+            }}
             className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
               activeCategory === category.id
                 ? 'bg-emerald-500 text-black shadow-[0_0_15px_rgba(16,185,129,0.3)]'

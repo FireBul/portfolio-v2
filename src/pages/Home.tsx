@@ -5,6 +5,7 @@ import { ArrowRight, ChevronRight, BarChart3, Target, Zap } from 'lucide-react';
 import { KEY_METRICS, PROJECTS } from '../constants';
 import { getOrAssignGroup, VARIANTS } from '../components/ABTestReveal';
 import { trackABEvent, trackVisitor } from '../utils/supabase';
+import { trackPageEvent } from '../utils/pageEvents';
 import { useAdMode } from '../components/AdPlatformDemo';
 import { DisplayBanner } from '../components/ads/DisplayBanner';
 import { suggestNextProject } from '../utils/geminiInsights';
@@ -36,6 +37,7 @@ export function Home() {
 
   const handleCTAClick = useCallback(() => {
     trackABEvent(group, 'click', '/');
+    trackPageEvent('cta_click', 'hero_projects_cta', { variant: group });
   }, [group]);
 
   // Gemini project recommendation after 30s
